@@ -72,7 +72,7 @@ SgApi.Plugins.register("Notifications", "0.1.0", function(){
 		var queueNotification = function(name, $html, opt){
 			name = name || (opt && opt.key);
 			if(name){
-				var db_name = "notification_"+GM_info.script.name+"_"+name;
+				var db_name = "notification_"+SgApi.Util.scriptInfo().name+"_"+name;
 				var savedData = read(db_name);;
 			}
 			var options = $.extend({showAlways: false, closable: true, storageKey: db_name, noQueue: false, duration: 0}, opt);

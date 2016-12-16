@@ -13,7 +13,7 @@ if(typeof $ === "undefined"){
 }
 
 (function(root){
-	var version = "0.1";
+	var version = "0.1.1";
 	
 	/**
 	 * 
@@ -572,6 +572,64 @@ if(typeof $ === "undefined"){
 				}
 				return result;
 			};
+			
+			/**
+			 *  @memberof SgApi.Util
+			 */
+			this.matchAll = function(regex, text) {
+				if (regex.constructor !== RegExp) {
+					throw new Error('not RegExp');
+				}
+
+				var res = [];
+				var match = null;
+
+				if (regex.global) {
+					while (match = regex.exec(text)) {
+						res.push(match);
+					}
+				}
+				else {
+					if (match = regex.exec(text)) {
+						res.push(match);
+					}
+				}
+
+				return res;
+			};
+
+			var scriptInfoRegex = /^\s*\/\/\s*@(\w+)\s+([^\n]+)\n/gm;
+			function parseScriptInfo(str){
+				str = str + "\n";
+				var result = {};
+				util.matchAll(scriptInfoRegex, str).forEach(function (item) {
+					var key = item[1];
+					var value = item[2];
+					if(result[key]){
+						if(!Array.isArray(result[key])){
+							var tmp = result[key];
+							result[key] = [tmp];
+						}
+						result[key].push(value);
+					}else{
+						if(key == "grant") //Make sure grant is always an array
+							value=[value];
+						result[key] = value;
+					}
+				});
+				return result;
+			}
+			
+			/**
+			 *  @memberof SgApi.Util
+			 */
+			this.scriptInfo = function(){
+				return $.extend(parseScriptInfo(GM_info.scriptMetaStr), GM_info.script);
+			}
+			
+			function isUsingTampermonkey(){
+			   return GM_info.toString().indexOf("Tampermonkey") >=0;
+			}
 			
 			/**
 			* 

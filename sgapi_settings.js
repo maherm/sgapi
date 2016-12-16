@@ -5,7 +5,7 @@
 * 	
 */
 
-SgApi.Plugins.register("Settings", "0.1.0", function(){
+SgApi.Plugins.register("Settings", "0.1.1", function(){
 	/**
 	 * 
 	 * @class Settings
@@ -439,7 +439,7 @@ SgApi.Plugins.register("Settings", "0.1.0", function(){
 
 		function createInfoDiv(){
 			var $div = $("<div>");
-			var scriptInfo = GM_info.script;
+			var scriptInfo = SgApi.Util.scriptInfo();
 			var scriptVersion = scriptInfo.version;
 			/*jshint multistr: true */
 			var textLines = [];
@@ -748,7 +748,7 @@ SgApi.Plugins.register("Settings", "0.1.0", function(){
 			
 			function checkGmStorageAvailability(){
 				var grants = function(str){
-					return GM_info.script.grant.indexOf(str) >= 0;
+					return SgApi.Util.scriptInfo().grant.indexOf(str) >= 0;
 				};
 				if(!(grants("GM_setValue") && grants("GM_getValue") && grants("GM_deleteValue")))
 					throw new Error("You need to @grant GM_setValue, GM_getValue, and GM_deleteValue to use the GM storage");
