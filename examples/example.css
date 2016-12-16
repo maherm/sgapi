@@ -1,0 +1,6 @@
+.page__inner-wrap:before {
+    content: "I am an external CSS file";
+    color: white;
+    background-color: rebeccapurple;
+    text-shadow: initial;
+}

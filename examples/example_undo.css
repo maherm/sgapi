@@ -1,0 +1,10 @@
+.page__inner-wrap:before {
+    content: "";
+    color: inherit;
+    background-color: inherit;
+	text-shadow: inherit;
+}
+
+a {
+	color: inherit;
+}

@@ -658,14 +658,9 @@ if(typeof $ === "undefined"){
 		 *  
 		 *  @param {SgApi.Context} [context] the context
 		 *  @returns {SgApi.Ui} the ui object
-		 *  @example
-		 *  var ui = new SgApi.Ui();
-		 * var allLinks = ui.Links.allGiveawayLinks;
-		 * var steamLinks = ui.Links.linksInMarkdown("store.steampowered.com");
-		 *  
 		 *  @class Ui
 		 *  @memberof SgApi
-		 * @declared in sgapi.js
+		 *  @declared in sgapi.js
 		 */
 		SgApi.Ui = function(context){
 			if(context){
