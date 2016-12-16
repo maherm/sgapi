@@ -6,7 +6,6 @@
 // @downloadURL  https://raw.githubusercontent.com/maherm/sgapi/master/examples/require.user.js
 // @require      https://raw.githubusercontent.com/maherm/sgapi/v0.1.0/sgapi.js
 // @resource     css https://raw.githubusercontent.com/maherm/sgapi/master/examples/example.css
-// @resource     local file:///C:/test.css
 // @match        https://www.steamgifts.com/*
 // @grant        GM_getResourceText
 // ==/UserScript==
@@ -15,7 +14,11 @@ use(SgApi.Util);
 
 requireCss('https://raw.githubusercontent.com/maherm/sgapi/master/examples/example.css'); //require a css file by URL
 
-//requireCss("local"); //while developing, require a local css file from your resources
+//while developing, you can require a local css file from your resources
+// @resource     local file:///C:/test.css
+//requireCss("local"); 
+
+
 requireCss("css"); //require a css file from your resources
 requireResourceCss("css"); //this has actually the same effect than the line above
 
