@@ -88,11 +88,6 @@ Constructor function for a new UI accessor.	 SgApi.UI is the central interface 
 | --- | --- | --- |
 | [context] | <code>[Context](#SgApi.Context)</code> | the context |
 
-**Example**  
-```js
-
-var ui = new SgApi.Ui();var allLinks = ui.Links.allGiveawayLinks;var steamLinks = ui.Links.linksInMarkdown("store.steampowered.com");  
-```
 <a name="SgApi.Ui.Sidebar"></a>
 
 #### Ui.Sidebar
@@ -705,10 +700,6 @@ Constructor function for a new UI accessor.	 SgApi.UI is the central interface 
 | --- | --- | --- |
 | [context] | <code>[Context](#SgApi.Context)</code> | the context |
 
-**Example**  
-```js
-var ui = new SgApi.Ui();var allLinks = ui.Links.allGiveawayLinks;var steamLinks = ui.Links.linksInMarkdown("store.steampowered.com");  
-```
 <a name="SgApi.Ui.Sidebar"></a>
 
 #### Ui.Sidebar
