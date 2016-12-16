@@ -13,7 +13,7 @@
 
 use(SgApi.Util);
 
-requireCss('https://manuelhermenau.de/scripts/test.css'); //require a css file by URL
+requireCss('https://raw.githubusercontent.com/maherm/sgapi/master/examples/example.css'); //require a css file by URL
 
 //requireCss("local"); //while developing, require a local css file from your resources
 requireCss("css"); //require a css file from your resources
@@ -22,7 +22,7 @@ requireResourceCss("css"); //this has actually the same effect than the line abo
 //If you have multiple css files declared in your resources, you can just tell SgApi
 //to require all of them. It will then look for files with the *.css suffix in your
 //resource declarations and require them
-requireDeclaredResources();
+requireDeclaredStyles();
 
 //If you prefer to, you can also keep injecting css right from the code
 //You don't even need GM_addStyles
