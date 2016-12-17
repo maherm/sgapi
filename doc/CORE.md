@@ -1,8 +1,7 @@
 ## Module: Core
 
 **Module Name:** Core  
-**Examples:** [1](https://github.com/maherm/sgapi/blob/master/examples/registry.user.js), [2](https://github.com/maherm/sgapi/blob/master/examples/require.user.js) 
-**Documentation:** [Github](https://github.com/maherm/sgapi/tree/master/doc/CORE.md)  
+**Examples:** [1](https://github.com/maherm/sgapi/blob/master/examples/registry.user.js), [2](https://github.com/maherm/sgapi/blob/master/examples/require.user.js)  
 **Include Code:**
 ```javascript
 //@require  https://raw.githubusercontent.com/maherm/sgapi/v0.1.5/sgapi.js 
@@ -134,7 +133,22 @@ if(SgApi.ScriptRegistry.existsMin("SgApi RequireCss Example", "0.1")){
 <a name="new_SgApi.Ui_new"></a>
 
 #### new Ui([context])
-Constructor function for a new UI accessor.	 SgApi.UI is the central interface to access all UI elements. This usually means returning jQuery objects that hold the elements you are looking for. Like SgApi, it is segmented in modules. SgApi Plugins can extend those modules or add new ones. For example, if include SgApi Giveaway Tools, the UI object will be augmented by a module called "CurrentGiveaway". If possible, the modules expose getters for convienient acccess.  The Core plugin contains modules for UI elements that are not bound to a specific use case. Currently it contains:  - Sidebar  	Access the left sidebar - Links  	Access Hyperlinks on the whole page   An UI accessor can be instanciated with a SgApi.Context. A context represents another site that is not the current site. Usually this was fetched via an ajax request. This way, the same interface can be used to access the current page or another page. For example, the Giveaway Tools offer a function loadGiveaway, that loads a Giveaway page via ajax. To extract the giveaway data from the remote page, it creates an UI object with that page as it's contexts, so every call to that UI object will search in the remote giveaway's HTML code instead of the current page.  If not Context argument is provided, the Context is the current page.
+Constructor function for a new UI accessor.	
+ SgApi.UI is the central interface to access all UI elements. This usually means returning jQuery objects that hold the elements you are looking for. Like SgApi, it is segmented in modules. SgApi Plugins can extend those modules or add new ones. For example, if include SgApi Giveaway Tools, the UI object will be augmented by a module called "CurrentGiveaway".
+ If possible, the modules expose getters for convienient acccess. 
+ The Core plugin contains modules for UI elements that are not bound to a specific use case. Currently it contains:
+ 
+ - Sidebar
+ 
+ 	Access the left sidebar
+ - Links
+ 
+ 	Access Hyperlinks on the whole page
+ 
+ 
+ An UI accessor can be instanciated with a SgApi.Context. A context represents another site that is not the current site. Usually this was fetched via an ajax request. This way, the same interface can be used to access the current page or another page. For example, the Giveaway Tools offer a function loadGiveaway, that loads a Giveaway page via ajax. To extract the giveaway data from the remote page, it creates an UI object with that page as it's contexts, so every call to that UI object will search in the remote giveaway's HTML code instead of the current page.
+ 
+ If not Context argument is provided, the Context is the current page.
 
 **Returns**: <code>[Ui](#SgApi.Ui)</code> - the ui object  
 
@@ -314,14 +328,17 @@ A registry of all Userscripts on the current page that use SgApi. Any script tha
 <a name="SgApi.ScriptRegistry.this.register"></a>
 
 #### ScriptRegistry.this.register()
-Registers a new script to this Registry. If there already exists an script with this name, the existing version is compared to the given one. If the given version is newer than the existing, the old one is replaced. If the script is accepted, it's initFunc function is called, in which it can initialize itself.  You usually won't have to invoke this function, since every script that embeds SgApi is automatically registered.
+Registers a new script to this Registry. If there already exists an script with this name, the existing version is compared to the given one. If the given version is newer than the existing, the old one is replaced. If the script is accepted, it's initFunc function is called, in which it can initialize itself.
+ 
+ You usually won't have to invoke this function, since every script that embeds SgApi is automatically registered.
 
 **Kind**: static method of <code>[ScriptRegistry](#SgApi.ScriptRegistry)</code>  
 **Declared**: in sgapi.js  
 <a name="SgApi.ScriptRegistry.this.list"></a>
 
 #### ScriptRegistry.this.list() ⇒ <code>Object</code>
-Lists all registered script.  Changes to the returned objects are NOT reflected to the backed data.
+Lists all registered script. 
+ Changes to the returned objects are NOT reflected to the backed data.
 
 **Kind**: static method of <code>[ScriptRegistry](#SgApi.ScriptRegistry)</code>  
 **Declared**: in sgapi.js  
@@ -404,7 +421,8 @@ Register a callback function that gets notified when a new script registers to t
 <a name="SgApi.Util"></a>
 
 ### SgApi.Util : <code>object</code>
-SgApi.Util is a central collection of useful recurring tasks. It is recommended to import the Utils into your namespace by use(SgApi.Util).
+SgApi.Util is a central collection of useful recurring tasks. 
+It is recommended to import the Utils into your namespace by use(SgApi.Util).
 
 **Kind**: static namespace of <code>[SgApi](#SgApi)</code>  
 **Declared**: in sgapi.js  
@@ -577,7 +595,9 @@ Gets the SG id of the current page.
 <a name="SgApi.Util.this.parseInteger"></a>
 
 #### Util.this.parseInteger(a) ⇒ <code>number</code>
-Assumes str is an Integer WITHOUT DECIMAL and converts it to an integer.Meaning, a string "10,00" is parsed to 1000. This function shold only be used when you know you are dealing with an int.
+Assumes str is an Integer WITHOUT DECIMAL and converts it to an integer.
+Meaning, a string "10,00" is parsed to 1000. This function shold only be used 
+when you know you are dealing with an int.
 
 **Kind**: static method of <code>[Util](#SgApi.Util)</code>  
 **Returns**: <code>number</code> - the integer value or NaN if the string was not a number  
@@ -590,7 +610,8 @@ Assumes str is an Integer WITHOUT DECIMAL and converts it to an integer.Meaning
 <a name="SgApi.Util.this.extractId"></a>
 
 #### Util.this.extractId(url) ⇒ <code>string</code>
-Gets the relevant id from an URL.  URL may be a SG URL, a Steam store URL or a Steam thumbnail URL
+Gets the relevant id from an URL. 
+ URL may be a SG URL, a Steam store URL or a Steam thumbnail URL
 
 **Kind**: static method of <code>[Util](#SgApi.Util)</code>  
 **Returns**: <code>string</code> - the id  
@@ -616,7 +637,10 @@ Calculates a hash code from a given string.
 <a name="SgApi.Util.this.requireResourceCss"></a>
 
 #### Util.this.requireResourceCss(key)
-Includes a CSS file that was declared as a resource in the script header. WARNING: Requiring a resource has a caveat opposed to requireCss: the resource is loaded once and cached forever by the ScriptManager. Meaning, if you want to update your resource, you need to update the script and point to another URL. If you use requireCss instead, the browsers built-in HTTP caching mechanisms are used, which means changed files will be recognized.  Requires: @grant GM_getResourceText
+Includes a CSS file that was declared as a resource in the script header.
+ WARNING: Requiring a resource has a caveat opposed to requireCss: the resource is loaded once and cached forever by the ScriptManager. Meaning, if you want to update your resource, you need to update the script and point to another URL. If you use requireCss instead, the browsers built-in HTTP caching mechanisms are used, which means changed files will be recognized.
+ 
+ Requires: @grant GM_getResourceText
 
 **Kind**: static method of <code>[Util](#SgApi.Util)</code>  
 **Declared**: in sgapi.js  
@@ -627,19 +651,29 @@ Includes a CSS file that was declared as a resource in the script header. WARNI
 
 **Example**  
 ```js
-// @resource     css https://manuelhermenau.de/scripts/test.css	// @grant        GM_getResourceText	// ==/UserScript==	use(SgApi.Util);	requireResourceCss("css");
+// @resource     css https://manuelhermenau.de/scripts/test.css
+	// @grant        GM_getResourceText
+	// ==/UserScript==
+	use(SgApi.Util);
+	requireResourceCss("css");
 ```
 <a name="SgApi.Util.this.requireDeclaredStyles"></a>
 
 #### Util.this.requireDeclaredStyles()
-Loads all *.css files that are declared in the script header via @resource. See requireResourceCss.
+Loads all *.css files that are declared in the script header via @resource.
+ See requireResourceCss.
 
 **Kind**: static method of <code>[Util](#SgApi.Util)</code>  
 **Declared**: in sgapi.js  
 <a name="SgApi.Util.this.requireCss"></a>
 
 #### Util.this.requireCss(cssUrl)
-Links a remote css file into the current page.   If given a resource identifier instead of an URL, the resource with that name will be embedded. See alos [requireResourceCss](requireResourceCss).   Caution: You can not link files from raw.githubusercontent.com by providing an URL to this function, because GitHub prevents this by setting the "nosniff" header. You can, however, replace 'raw.githubusercontent.com' in your URL string by 'rawgit.com'. Rawgit.com is a service that removes this header. Note that rawgit is a service on it's own and not afiliated with GitHub.
+Links a remote css file into the current page.  
+ If given a resource identifier instead of an URL, the resource with that name will be embedded.
+ See alos [requireResourceCss](requireResourceCss).
+ 
+ 
+ Caution: You can not link files from raw.githubusercontent.com by providing an URL to this function, because GitHub prevents this by setting the "nosniff" header. You can, however, replace 'raw.githubusercontent.com' in your URL string by 'rawgit.com'. Rawgit.com is a service that removes this header. Note that rawgit is a service on it's own and not afiliated with GitHub.
 
 **Kind**: static method of <code>[Util](#SgApi.Util)</code>  
 **Declared**: in sgapi.js  
@@ -694,7 +728,16 @@ Tests a regex agains a string and returns an array of all matches
 <a name="SgApi.Util.this.getDataStore"></a>
 
 #### Util.this.getDataStore(name)
-Gets or creates a datastore. Datastores can be used to store data in the scope of a page request, spanning all Userscripts. Meaning, you can share data between UserScripts bypassing the Script Managers sandbox.| Storage             | Accessability     | Expiry || :------------------ | :----------  | :------------------ || localStorage   | every script on the host  | Never / on clear browser data||GM_setValue, GM_getValue | only the userscript that created it | Never || sessionStorage | every script on the host  | close tab / navigate away from host || Cookies | every script on the host | Defined date or never || window  | guaranteed only  for the current UserScript in the current page impression | Reload / Navigate || SgApi.DataStore | all scripts and userscripts in the same page impression | Reload / Navigate |
+Gets or creates a datastore. Datastores can be used to store data in the scope of a page request, spanning all Userscripts. Meaning, you can share data between UserScripts bypassing the Script Managers sandbox.
+
+| Storage             | Accessability     | Expiry |
+| :------------------ | :----------  | :------------------ |
+| localStorage   | every script on the host  | Never / on clear browser data|
+|GM_setValue, GM_getValue | only the userscript that created it | Never |
+| sessionStorage | every script on the host  | close tab / navigate away from host |
+| Cookies | every script on the host | Defined date or never |
+| window  | guaranteed only  for the current UserScript in the current page impression | Reload / Navigate |
+| SgApi.DataStore | all scripts and userscripts in the same page impression | Reload / Navigate |
 
 **Kind**: static method of <code>[Util](#SgApi.Util)</code>  
 **Declared**: in sgapi.js  
