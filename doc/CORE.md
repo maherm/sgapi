@@ -48,7 +48,6 @@
         * [.this.requireDeclaredStyles()](#SgApi.Util.this.requireDeclaredStyles)
         * [.this.requireCss(cssUrl)](#SgApi.Util.this.requireCss)
         * [.this.injectCss(styles)](#SgApi.Util.this.injectCss)
-        * [.this.enqueue(func)](#SgApi.Util.this.enqueue)
         * [.this.unwrap(obj)](#SgApi.Util.this.unwrap)
         * [.this.matchAll(regex, text)](#SgApi.Util.this.matchAll) ⇒ <code>Array</code>
         * [.this.scriptInfo()](#SgApi.Util.this.scriptInfo)
@@ -239,7 +238,7 @@ Creates a new context from a HTML string. Must be the complete HTML code of a fe
 <a name="SgApi.ScriptRegistry"></a>
 
 ### SgApi.ScriptRegistry
-A registry of all Userscripts on the current page that use SgApi. Any script that uses SgApi is automatically registered upon execution. ATTENTION: Due to execution order of your Userscripts, some scripts may not yet be registered upon document-idle. To ensure, that all scripts are registered, you should enqueue your Userscript code by using SgApi.Util.enqueue
+A registry of all Userscripts on the current page that use SgApi. Any script that uses SgApi is automatically registered upon execution. ATTENTION: Due to execution order of your Userscripts, some scripts may not yet be registered upon document-idle. To ensure that you won't miss a script that gets registered too late, you should hook to onRegister to get notified about future registrations.
 
 **Kind**: static property of <code>[SgApi](#SgApi)</code>  
 **Declared**: in sgapi.js  
@@ -338,6 +337,7 @@ Checks whether there is a script registered to the given name that is the given 
 Register a callback function that gets notified when a new script registers to the Registry or a script gets replaced by a newer version.
 
 **Kind**: static method of <code>[ScriptRegistry](#SgApi.ScriptRegistry)</code>  
+**Declared**: in sgapi.js  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -369,7 +369,6 @@ SgApi.Util is a central collection of useful recurring tasks. It is recommended
     * [.this.requireDeclaredStyles()](#SgApi.Util.this.requireDeclaredStyles)
     * [.this.requireCss(cssUrl)](#SgApi.Util.this.requireCss)
     * [.this.injectCss(styles)](#SgApi.Util.this.injectCss)
-    * [.this.enqueue(func)](#SgApi.Util.this.enqueue)
     * [.this.unwrap(obj)](#SgApi.Util.this.unwrap)
     * [.this.matchAll(regex, text)](#SgApi.Util.this.matchAll) ⇒ <code>Array</code>
     * [.this.scriptInfo()](#SgApi.Util.this.scriptInfo)
@@ -591,18 +590,6 @@ Injects the given CSS string into the current page
 | --- | --- | --- |
 | styles | <code>string</code> | a valid CSS string |
 
-<a name="SgApi.Util.this.enqueue"></a>
-
-#### Util.this.enqueue(func)
-Enqueues the execution of func after all pending script- and render actions.
-
-**Kind**: static method of <code>[Util](#SgApi.Util)</code>  
-**Declared**: in sgapi.js  
-
-| Param | Type | Description |
-| --- | --- | --- |
-| func | <code>function</code> | the function to enqueue |
-
 <a name="SgApi.Util.this.unwrap"></a>
 
 #### Util.this.unwrap(obj)
@@ -622,6 +609,7 @@ Tests a regex agains a string and returns an array of all matches
 
 **Kind**: static method of <code>[Util](#SgApi.Util)</code>  
 **Returns**: <code>Array</code> - an array containing all the matches  
+**Declared**: in sgapi.js  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -632,6 +620,7 @@ Tests a regex agains a string and returns an array of all matches
 
 #### Util.this.scriptInfo()
 **Kind**: static method of <code>[Util](#SgApi.Util)</code>  
+**Declared**: in sgapi.js  
 <a name="SgApi.Util.this.getDataStore"></a>
 
 #### Util.this.getDataStore(name)

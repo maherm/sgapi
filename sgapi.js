@@ -584,20 +584,6 @@ if(typeof $ === "undefined"){
 			};
 			
 			/**
-			 * 
-			 *  Enqueues the execution of func after all pending script- and render actions. 
-			 *  
-			 *  @param {Function} func the function to enqueue
-			 *  @memberof SgApi.Util
-			 *  @deprecated Deprecated due to the fact that Firefox/Greasemonkey and Tampermonkey handle the queuing differently. While Tampermonkey queues the function until after ALL scripts executed, Greasemonkey queues it until after the current script executed.
-			 * 
-			 * @declared in sgapi.js
-			 */
-			this.enqueue = function(func){
-				root.setTimeout(func, 0);
-			}
-			
-			/**
 			* 
 			* Calls all getters on an object. Basicly used to pretty print an object with many getters to the console.
 			* @param {Object} obj the obj to unwrap
