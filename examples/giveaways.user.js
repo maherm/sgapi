@@ -4,9 +4,9 @@
 // @version      0.4
 // @author       mahermen
 // @downloadURL  https://raw.githubusercontent.com/maherm/sgapi/master/examples/registry.user.js
-// @require      https://raw.githubusercontent.com/maherm/sgapi/v0.1.4/sgapi.js
-// @require      https://raw.githubusercontent.com/maherm/sgapi/v0.1.4/sgapi_gatools.js
-// @require      https://raw.githubusercontent.com/maherm/sgapi/v0.1.4/sgapi_wishlist.js
+// @require      https://raw.githubusercontent.com/maherm/sgapi/v0.1.5/sgapi.js
+// @require      https://raw.githubusercontent.com/maherm/sgapi/v0.1.5/sgapi_gatools.js
+// @require      https://raw.githubusercontent.com/maherm/sgapi/v0.1.5/sgapi_wishlist.js
 // @match        https://www.steamgifts.com/*
 // @grant none
 // ==/UserScript==

@@ -5,8 +5,8 @@
 // @author       mahermen
 // @downloadURL  https://raw.githubusercontent.com/maherm/sgapi/master/examples/settings.user.js
 // @require      https://code.jquery.com/jquery-3.1.1.min.js
-// @require      https://raw.githubusercontent.com/maherm/sgapi/v0.1.4/sgapi.js
-// @require      https://raw.githubusercontent.com/maherm/sgapi/v0.1.4/sgapi_settings.js
+// @require      https://raw.githubusercontent.com/maherm/sgapi/v0.1.5/sgapi.js
+// @require      https://raw.githubusercontent.com/maherm/sgapi/v0.1.5/sgapi_settings.js
 // @match        https://www.steamgifts.com/*
 // @grant        GM_getValue
 // @grant        GM_setValue
