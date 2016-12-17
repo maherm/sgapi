@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         SgApi ScriptRegistry Example
 // @namespace    https://github.com/maherm/sgapi
-// @version      0.6
+// @version      0.7
 // @author       mahermen
 // @downloadURL  https://raw.githubusercontent.com/maherm/sgapi/master/examples/registry.user.js
 // @require      https://code.jquery.com/jquery-3.1.1.min.js
@@ -25,5 +25,5 @@ fixIt();
 
 //Since it may be that the other script was not initialized yet,
 //we need check again when new scripts register
-SgApi.Registry.onRegister(fixIt);
+SgApi.ScriptRegistry.onRegister(fixIt);
 
