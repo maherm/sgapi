@@ -1,3 +1,75 @@
+## Module: Settings
+
+**Module Name:** Settings  
+**Examples:** [1](https://github.com/maherm/sgapi/tree/master/examples/settings.user.js)  
+**Include Code:**
+```javascript
+//@require  https://raw.githubusercontent.com/maherm/sgapi/v0.1.5/sgapi_settings.js
+```
+
+### Settings - Example
+```javascript
+// ==UserScript==
+// @name         Mini Example Settings
+// @require      https://code.jquery.com/jquery-3.1.1.min.js
+// @require      https://raw.githubusercontent.com/maherm/sgapi/v0.1.5/sgapi.js
+// @require      https://raw.githubusercontent.com/maherm/sgapi/v0.1.5/sgapi_settings.js
+// @include      http*://www.steamgifts.com/*
+// ==/UserScript==
+
+var settings = new SgApi.Settings("Mini example")
+	.boolean("Do spin", true)
+	.int("Spin times", 10, {minValue:1})
+	.init();
+
+if(settings.get("Do spin")){
+	var times = settings.get("Spin times");
+	for(times; times>0; times--)
+		console.log("Round, round baby round, round");
+}
+```  
+
+### Settings - About
+When developing a script, there is always the point reached when the complexity of your script requires some configuration to stay flexible. 
+Since there is no way to hook into SGs settings it is a rather big effort to include some basic configuration capabilities.
+Many devs decided that the cost/benefit ratio for this small feature is unsatisfying and included their settings in global variables in their code, which is not a nice solution either. Most users don't want to be bothered with tampering with the code, and with every update these settings are overwritten.
+
+The SgApi Settings module offers a lean interface to manage your settings and handles all the UI stuff for you. You just need to declare your settings once and SgApi integrates your Settings into the SG Account page. All Settings are integrated in the sidebar in the section "Userscripts".
+
+```javascript
+ var settings = new Settings("Test API")
+		.boolean("A bool value"		, true)
+        .boolean("Make trains"		, true	        , {description:"Automatically make a train when you win something", values: ["Never", "Always"]})
+        .int    ("Minutes"			, 5		        , {minValue: 0, maxValue:15)
+        .float  ("Ratio"			, 0.5	        , {minValue: 0, title: "Minimum Ratio")
+        .string ("A string value"	, "Lorem ipsum" , {maxLength:11})
+        .enum   ("Theme"			, ["Dark","Blue","Original"]	, 2)
+		.func   ("Reset"			, function(){alert("Hell yea");})
+    ;
+    settings=settings.init({instantSubmit: true});
+```
+The last parameter in a setting declaration is always an options object, which is - hence the name - optional. Using these options you can tweak the Settings UI and behaviour to fit your needs. Basic options, that are available for most types of setting are ```description, visible, title,``` and ```editable``` . Most setting types have dedicated additional options, like minValue and maxValue for numbers. Like always, check the docs for a complete example and more details.
+
+Once initialized, you can access your settings in your script using the get() function:
+
+```javascript
+    if(settings.get("Make trains")){
+        console.log("I like turtles");
+    }
+```
+
+Check the docs(this page) for more details on the options or just [install the example](https://github.com/maherm/sgapi/raw/master/examples/settings.user.js) and play around a little bit. Don't forget that your script needs to @match /account/* for the settings to appear there.
+
+By default, the settings are saved in the localStorage, so that no additional @grants are necessary. Keep in mind that localStorage can be accessed by any script on SteamGifts. So if you have sensitive data in your settings, e.g. an API key or something like that, it is highly recommended to initialize your Settings with the "useGmStorage" option. For that to work, you need to @grant GM_setValue, GM_getValue, and GM_deleteValue.
+
+```javascript
+settings = settings.init({useGmStorage:true});
+```
+
+Although it is possible to define a custom section for your Settings to reside in, for the sake of usability, it is not recommended. This way, the users don't have an unnecessarily cluttered sidebar and always know where to look if they want to change a setting from any Userscript.
+
+## Settings - JsDoc
+
 <a name="SgApi"></a>
 
 ## SgApi : <code>object</code>

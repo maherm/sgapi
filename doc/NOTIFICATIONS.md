@@ -1,3 +1,30 @@
+## Module: Notifications
+**Module Name:** Notifications  
+**Examples:** [1](https://github.com/maherm/sgapi/tree/master/examples/notifications.user.js)   
+**Include Code:**  
+```javascript
+//@require  https://raw.githubusercontent.com/maherm/sgapi/v0.1.5/sgapi_notifications.js
+```
+
+### Notifications - Example
+```javascript
+// ==UserScript==
+// @name         Mini Notifications Example
+// @require      https://raw.githubusercontent.com/maherm/sgapi/v0.1.5/sgapi.js
+// @require      https://raw.githubusercontent.com/maherm/sgapi/v0.1.5/sgapi_notifications.js
+// @match        https://www.steamgifts.com/giveaway/*
+// ==/UserScript==
+
+//This Notification will be displayed every time until the user disposes it by clicking the "x" - then never again
+SgApi.Notifications.notify("info", "New Version: 2.3 - New Features include nicer header and world domination", {key:"Version23"});
+```
+
+### Notifications - About
+The Notifications module lets you show messages to you users. They will be displayed at the top of the content div and look just like [Bootstrap Alerts](https://v4-alpha.getbootstrap.com/components/alerts/).
+There can be always only one ~~Highlander~~ notification displayed. All other Notifications are queued and displayed when the previous one has been disposed.
+
+### Notifications - JsDoc
+
 <a name="SgApi"></a>
 
 ## SgApi : <code>object</code>

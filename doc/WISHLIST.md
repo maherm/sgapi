@@ -1,3 +1,39 @@
+## Module: Wishlist
+
+**Module Name:** Wishlist  
+**Examples:** [1](https://github.com/maherm/sgapi/tree/master/examples/giveaways.user.js)  
+**Include Code:**  
+```javascript
+//@require  https://raw.githubusercontent.com/maherm/sgapi/v0.1.5/sgapi_wishlist.js
+```
+
+### Wishlist - Example
+```javascript
+// ==UserScript==
+// @name         Mini Wishlist Example
+// @require      https://raw.githubusercontent.com/maherm/sgapi/v0.1.5/sgapi.js
+// @require      https://raw.githubusercontent.com/maherm/sgapi/v0.1.5/sgapi_gatools.js
+// @require      https://raw.githubusercontent.com/maherm/sgapi/v0.1.5/sgapi_wishlist.js
+// @match        https://www.steamgifts.com/*
+// ==/UserScript==
+
+use(SgApi);
+Wishlist.get(function(wishlist){
+	var ga = Giveaways.currentGiveaway();
+	if(wishlist.contains(ga)){
+		var wishlistData = wishlist.get(ga);
+		alert("You have this game wishlisted since "+new Date(wishlistData.since * 1000).toUTCString());
+	}
+});
+```
+
+### Wishlist - About
+
+The Wishlist module lets you access your steam wishlist. It is most useful in combination with the "Giveaway Tools" plugin. It maintains a copy of your wishlist in the localStorage and synchs this cached copy automatically when SG syncs with Steam. 
+Because a sync may happen, you need to get your wishlist asynchronously
+
+### Wishlist - JsDoc 
+
 <a name="SgApi"></a>
 
 ## SgApi : <code>object</code>

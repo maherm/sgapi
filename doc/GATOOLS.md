@@ -1,3 +1,34 @@
+## Module: Giveaway Tools
+
+**Module Name:** Giveaway Tools  
+**Examples:** [1](https://github.com/maherm/sgapi/tree/master/examples/giveaways.user.js) 
+**Include Code:**
+```javascript
+//@require  https://raw.githubusercontent.com/maherm/sgapi/v0.1.5/sgapi_gatools.js
+```
+
+### Giveaway Tools - Example
+```javascript
+// ==UserScript==
+// @name         Mini Giveaway Tools Example
+// @require      https://raw.githubusercontent.com/maherm/sgapi/v0.1.5/sgapi.js
+// @require      https://raw.githubusercontent.com/maherm/sgapi/v0.1.5/sgapi_gatools.js
+// @match        https://www.steamgifts.com/*
+// ==/UserScript==
+
+use(SgApi);
+use(SgApi.Util);
+var ga = Giveaways.currentGiveaway();
+console.log(unwrap(ga));
+console.log("You are looking at a Giveaway for '"+ga.gameTitle+"'. It was created on "+new Date(ga.startTime*1000).toUTCString()+" and got "+ga.entryCount+" entries" +(ga.isRunning?" so far" :""));
+```
+
+### Giveaway Tools - About
+
+The Giveaway Tools provide a handy interface to read Giveaway Data. It also extends the UI class, exposing the relevant jQuery queries. Currently, this module is read-only, meaning it does not provide any auto-enter features.
+
+### Giveaway Tools - JsDoc
+
 <a name="SgApi"></a>
 
 ## SgApi : <code>object</code>
@@ -10,6 +41,7 @@
             * [.id](#SgApi.Giveaways.Giveaway.id) ⇒ <code>string</code>
             * [.gameTitle](#SgApi.Giveaways.Giveaway.gameTitle) ⇒ <code>string</code>
             * [.cp](#SgApi.Giveaways.Giveaway.cp) ⇒ <code>int</code>
+            * [.steamUrl](#SgApi.Giveaways.Giveaway.steamUrl) ⇒ <code>string</code>
             * [.steamAppId](#SgApi.Giveaways.Giveaway.steamAppId) ⇒ <code>string</code>
             * [.copies](#SgApi.Giveaways.Giveaway.copies) ⇒ <code>int</code>
             * [.contributorLevel](#SgApi.Giveaways.Giveaway.contributorLevel) ⇒ <code>int</code>
@@ -43,6 +75,7 @@
         * [.id](#SgApi.Giveaways.Giveaway.id) ⇒ <code>string</code>
         * [.gameTitle](#SgApi.Giveaways.Giveaway.gameTitle) ⇒ <code>string</code>
         * [.cp](#SgApi.Giveaways.Giveaway.cp) ⇒ <code>int</code>
+        * [.steamUrl](#SgApi.Giveaways.Giveaway.steamUrl) ⇒ <code>string</code>
         * [.steamAppId](#SgApi.Giveaways.Giveaway.steamAppId) ⇒ <code>string</code>
         * [.copies](#SgApi.Giveaways.Giveaway.copies) ⇒ <code>int</code>
         * [.contributorLevel](#SgApi.Giveaways.Giveaway.contributorLevel) ⇒ <code>int</code>
@@ -75,6 +108,7 @@
     * [.id](#SgApi.Giveaways.Giveaway.id) ⇒ <code>string</code>
     * [.gameTitle](#SgApi.Giveaways.Giveaway.gameTitle) ⇒ <code>string</code>
     * [.cp](#SgApi.Giveaways.Giveaway.cp) ⇒ <code>int</code>
+    * [.steamUrl](#SgApi.Giveaways.Giveaway.steamUrl) ⇒ <code>string</code>
     * [.steamAppId](#SgApi.Giveaways.Giveaway.steamAppId) ⇒ <code>string</code>
     * [.copies](#SgApi.Giveaways.Giveaway.copies) ⇒ <code>int</code>
     * [.contributorLevel](#SgApi.Giveaways.Giveaway.contributorLevel) ⇒ <code>int</code>
@@ -112,6 +146,11 @@ Read-only representation of a giveaway.	Getters should be self-explanatory.
 <a name="SgApi.Giveaways.Giveaway.cp"></a>
 
 ##### Giveaway.cp ⇒ <code>int</code>
+**Kind**: static property of <code>[Giveaway](#SgApi.Giveaways.Giveaway)</code>  
+**Declared**: in sgapi_gatools.js  
+<a name="SgApi.Giveaways.Giveaway.steamUrl"></a>
+
+##### Giveaway.steamUrl ⇒ <code>string</code>
 **Kind**: static property of <code>[Giveaway](#SgApi.Giveaways.Giveaway)</code>  
 **Declared**: in sgapi_gatools.js  
 <a name="SgApi.Giveaways.Giveaway.steamAppId"></a>
