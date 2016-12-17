@@ -13,7 +13,7 @@ if(typeof $ === "undefined"){
 }
 
 (function(root){
-	var version = "0.1.1";
+	var version = "0.1.3";
 	
 	/**
 	 * 
