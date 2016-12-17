@@ -13,18 +13,31 @@ if(typeof $ === "undefined"){
 }
 
 (function(root){
-	var version = "0.1.3";
+	var version = "0.1.4";
 	
 	/**
-	 * 
-	 *  
 	 *  @param {Container} dataContainer the container in which the Registry's data is stored.
 	 *  @class Registry
 	 *  @private
+	 *  @ignore
 	 *  @declared in sgapi.js
 	 */
 	var Registry = function(dataContainer){
 		var self = this;
+		var listeners = [];
+		
+		if(dataContainer.onChange)
+			dataContainer.onChange(function(oldVal, newVal){
+				if(listeners.length===0)
+					return;
+				for(var key in newVal){
+					var oldEntry = oldVal[key];
+					var newEntry = newVal[key]
+					if(!oldEntry || !(oldEntry.version === newEntry.version)){
+						listeners.forEach(function(l){l(newEntry, oldEntry!==undefined);});
+					}
+				}
+			});
 		
 		/**
 		 * 
@@ -42,7 +55,10 @@ if(typeof $ === "undefined"){
 			}
 			if(initFunc)
 				initFunc();
-			dataContainer.set(name, {name: name, version: version});
+			var entry = {name: name, version: version};
+			dataContainer.set(name, entry);
+			if(!dataContainer.onChange)
+				listeners.forEach(function(l){l(entry, existing);});
 		};
 		
 		/**
@@ -141,6 +157,17 @@ if(typeof $ === "undefined"){
 			 if(!version)
 				 return true;
 			 return Registry.versionCompare(version, existing.version) >= 0;
+		};
+		
+		/**
+		 *  Register a callback function that gets notified when a new script registers to the Registry or a script gets replaced by a newer version.  
+		 *
+		 *  @memberof SgApi.ScriptRegistry
+		 *  @param {function(newScript)} callback a callback that gets notified if a new script registers to the ScriptRegistry
+		 *  @declared in sgapi.js
+		 */
+		this.onRegister = function(callback){
+			listeners.push(callback);
 		};
 		
 	};
@@ -562,7 +589,7 @@ if(typeof $ === "undefined"){
 			 *  
 			 *  @param {Function} func the function to enqueue
 			 *  @memberof SgApi.Util
-			 
+			 *  @deprecated Deprecated due to the fact that Firefox/Greasemonkey and Tampermonkey handle the queuing differently. While Tampermonkey queues the function until after ALL scripts executed, Greasemonkey queues it until after the current script executed.
 			 * 
 			 * @declared in sgapi.js
 			 */
@@ -586,7 +613,14 @@ if(typeof $ === "undefined"){
 			};
 			
 			/**
+			 *  Tests a regex agains a string and returns an array of all matches  
+			 *
 			 *  @memberof SgApi.Util
+			 *  @param {Regex} regex a regular expression
+			 *  @param {string} text the string to test
+			 *  @return {Array} an array containing all the matches
+			 *  
+			 *  @declared in sgapi.js
 			 */
 			this.matchAll = function(regex, text) {
 				if (regex.constructor !== RegExp) {
@@ -650,6 +684,7 @@ if(typeof $ === "undefined"){
 			
 			/**
 			 *  @memberof SgApi.Util
+			 *  @declared in sgapi.js
 			 */
 			this.scriptInfo = function(){
 				return $.extend(parseScriptInfo(GM_info.scriptMetaStr), GM_info.script);
@@ -677,19 +712,42 @@ if(typeof $ === "undefined"){
 			* @declared in sgapi.js
 			*/
 			this.getDataStore = function (name){
+				//Get or create the DOM element
 				var dsId = "sgapi__data_store_"+name;
 				var $ds = $("#"+dsId);
 				if($ds.length === 0){
-					$ds=$("<span style='display:none;'></span>");
+					$ds=$("<span style='display:none!important;'></span>");
 					$ds.attr("id", dsId);
 					$("html").append($ds);
 				}
+				
+				
+				//Register Observer
+				var listeners = [];
+				var observer = new MutationObserver(function(mutations) {
+					if(listeners.length>0){
+						var newValue = parse();
+						mutations.forEach(function(mutation) {
+							var oldValue = mutation.oldValue;
+							oldValue =  (!oldValue || oldValue === "" ) ? "{}" : oldValue;
+							listeners.forEach(function(listener){
+								listener(oldValue, newValue);
+							});
+						});    
+					}
+				});
+
+				observer.observe($ds[0], {attributes:true, attributeFilter: ["data-storage"], attributeOldValue:true});
+				
+				
 				var parse = function(){
 					return JSON.parse($ds.attr("data-storage") ||"{}");
 				};
 				var save = function(json){
 					$ds.attr("data-storage", JSON.stringify(json));
 				};
+				
+				
 				return {
 					list: function(){
 						return $.extend({},parse(),true);
@@ -709,6 +767,9 @@ if(typeof $ === "undefined"){
 						var json = parse();
 						delete json[key];
 						save(json);
+					},
+					onChange: function(callback){
+						listeners.push(callback);
 					}
 				};
 			};
@@ -716,7 +777,7 @@ if(typeof $ === "undefined"){
 
 		/**
 		 * 
-		 *  A registry of all Userscripts on the current page that use SgApi. Any script that uses SgApi is automatically registered upon execution. ATTENTION: Due to execution order of your Userscripts, some scripts may not yet be registered upon document-idle. To ensure, that all scripts are registered, you should enqueue your Userscript code by using SgApi.Util.enqueue
+		 *  A registry of all Userscripts on the current page that use SgApi. Any script that uses SgApi is automatically registered upon execution. ATTENTION: Due to execution order of your Userscripts, some scripts may not yet be registered upon document-idle. To ensure that you won't miss a script that gets registered too late, you should hook to onRegister to get notified about future registrations.
 		 *  
 		 *  @memberof SgApi
 		 * @declared in sgapi.js

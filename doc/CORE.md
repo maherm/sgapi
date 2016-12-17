@@ -29,6 +29,7 @@
         * [.this.existsMin(name, version)](#SgApi.ScriptRegistry.this.existsMin) ⇒ <code>boolean</code>
         * [.this.exists(name)](#SgApi.ScriptRegistry.this.exists) ⇒ <code>boolean</code>
         * [.this.existsMax(name, version)](#SgApi.ScriptRegistry.this.existsMax) ⇒ <code>boolean</code>
+        * [.this.onRegister(callback)](#SgApi.ScriptRegistry.this.onRegister)
     * [.Util](#SgApi.Util) : <code>object</code>
         * [.this.parseBool(value)](#SgApi.Util.this.parseBool) ⇒ <code>boolean</code>
         * [.this.buildGiveawayUrl(id)](#SgApi.Util.this.buildGiveawayUrl) ⇒ <code>string</code>
@@ -49,6 +50,8 @@
         * [.this.injectCss(styles)](#SgApi.Util.this.injectCss)
         * [.this.enqueue(func)](#SgApi.Util.this.enqueue)
         * [.this.unwrap(obj)](#SgApi.Util.this.unwrap)
+        * [.this.matchAll(regex, text)](#SgApi.Util.this.matchAll) ⇒ <code>Array</code>
+        * [.this.scriptInfo()](#SgApi.Util.this.scriptInfo)
         * [.this.getDataStore(name)](#SgApi.Util.this.getDataStore)
 
 <a name="SgApi.Ui"></a>
@@ -249,6 +252,7 @@ A registry of all Userscripts on the current page that use SgApi. Any script tha
     * [.this.existsMin(name, version)](#SgApi.ScriptRegistry.this.existsMin) ⇒ <code>boolean</code>
     * [.this.exists(name)](#SgApi.ScriptRegistry.this.exists) ⇒ <code>boolean</code>
     * [.this.existsMax(name, version)](#SgApi.ScriptRegistry.this.existsMax) ⇒ <code>boolean</code>
+    * [.this.onRegister(callback)](#SgApi.ScriptRegistry.this.onRegister)
 
 <a name="SgApi.ScriptRegistry.this.register"></a>
 
@@ -328,6 +332,17 @@ Checks whether there is a script registered to the given name that is the given 
 | name | <code>string</code> | a name |
 | version | <code>string</code> | a version string |
 
+<a name="SgApi.ScriptRegistry.this.onRegister"></a>
+
+#### ScriptRegistry.this.onRegister(callback)
+Register a callback function that gets notified when a new script registers to the Registry or a script gets replaced by a newer version.
+
+**Kind**: static method of <code>[ScriptRegistry](#SgApi.ScriptRegistry)</code>  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| callback | <code>function</code> | a callback that gets notified if a new script registers to the ScriptRegistry |
+
 <a name="SgApi.Util"></a>
 
 ### SgApi.Util : <code>object</code>
@@ -356,6 +371,8 @@ SgApi.Util is a central collection of useful recurring tasks. It is recommended
     * [.this.injectCss(styles)](#SgApi.Util.this.injectCss)
     * [.this.enqueue(func)](#SgApi.Util.this.enqueue)
     * [.this.unwrap(obj)](#SgApi.Util.this.unwrap)
+    * [.this.matchAll(regex, text)](#SgApi.Util.this.matchAll) ⇒ <code>Array</code>
+    * [.this.scriptInfo()](#SgApi.Util.this.scriptInfo)
     * [.this.getDataStore(name)](#SgApi.Util.this.getDataStore)
 
 <a name="SgApi.Util.this.parseBool"></a>
@@ -553,7 +570,7 @@ Loads all *.css files that are declared in the script header via @resource. See
 <a name="SgApi.Util.this.requireCss"></a>
 
 #### Util.this.requireCss(cssUrl)
-Loads a CSS file from another server an embedds it into the current page.  If given a resource identifier instead of an URL, the resource with that name will be embedded. See alos [requireResourceCss](requireResourceCss).
+Links a remote css file into the current page.   If given a resource identifier instead of an URL, the resource with that name will be embedded. See alos [requireResourceCss](requireResourceCss).   Caution: You can not link files from raw.githubusercontent.com by providing an URL to this function, because GitHub prevents this by setting the "nosniff" header. You can, however, replace 'raw.githubusercontent.com' in your URL string by 'rawgit.com'. Rawgit.com is a service that removes this header. Note that rawgit is a service on it's own and not afiliated with GitHub.
 
 **Kind**: static method of <code>[Util](#SgApi.Util)</code>  
 **Declared**: in sgapi.js  
@@ -598,6 +615,23 @@ Calls all getters on an object. Basicly used to pretty print an object with many
 | --- | --- | --- |
 | obj | <code>Object</code> | the obj to unwrap |
 
+<a name="SgApi.Util.this.matchAll"></a>
+
+#### Util.this.matchAll(regex, text) ⇒ <code>Array</code>
+Tests a regex agains a string and returns an array of all matches
+
+**Kind**: static method of <code>[Util](#SgApi.Util)</code>  
+**Returns**: <code>Array</code> - an array containing all the matches  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| regex | <code>Regex</code> | a regular expression |
+| text | <code>string</code> | the string to test |
+
+<a name="SgApi.Util.this.scriptInfo"></a>
+
+#### Util.this.scriptInfo()
+**Kind**: static method of <code>[Util](#SgApi.Util)</code>  
 <a name="SgApi.Util.this.getDataStore"></a>
 
 #### Util.this.getDataStore(name)
