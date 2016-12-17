@@ -13,7 +13,7 @@ if(typeof $ === "undefined"){
 }
 
 (function(root){
-	var version = "0.1.4";
+	var version = "0.1.5";
 	
 	/**
 	 *  @param {Container} dataContainer the container in which the Registry's data is stored.
@@ -304,6 +304,21 @@ if(typeof $ === "undefined"){
 			};
 
 			/**
+			 *  @param {string|Giveaway} urlOrGa a steam store url or a giveaway object from the SgApi GA Tools
+			 *  @return either "app" or "sub", or undefined if the type could not be determined
+			 */
+			this.getAppOrSub = function(urlOrGa){
+				url = typeof urlOrGa === "string" ? urlOrGa : urlOrGa.steamUrl;
+				var match = url.match(steamStoreUrlRe);
+				if(match)
+					return match[2];
+				match = url.match(steamImgUrlRe);
+				if(match)
+					return match[2];
+				return undefined;
+			}
+			
+			/**
 			 * 
 			 *  Builds an url to the thumbnail for the game with the given steam id.
 			 *  
@@ -315,8 +330,11 @@ if(typeof $ === "undefined"){
 			 * @declared in sgapi.js
 			 
 			 */
-			this.getGameThumbUrl = function(steamAppId){
-				return "https://steamcdn-a.akamaihd.net/steam/apps/"+steamAppId+"/capsule_184x69.jpg";
+			this.getGameThumbUrl = function(steamAppIdOrGa, type){
+				var id = typeof steamAppIdOrGa === "string" ? steamAppIdOrGa : steamAppIdOrGa.steamAppId;
+				type = type || getAppOrSub(steamAppIdOrGa) || "app";
+				type = type;
+				return "https://steamcdn-a.akamaihd.net/steam/"+type+"s/"+id+"/capsule_184x69.jpg";
 			};
 			
 			/**
@@ -432,7 +450,7 @@ if(typeof $ === "undefined"){
 
 			var sgUrlRe = /^https?:\/\/(www)?\.steamgifts\.com\/(giveaway|discussion)\/([\w\d]{5})\/.*$/i;
 			var steamStoreUrlRe = /^(https?:\/\/)?store\.steampowered\.com\/(app|sub)\/(\d+)($|\/.*$)/i;
-			var steamImgUrlRe = /^(https?:\/\/)?steamcdn-a\.akamaihd\.net\/steam\/apps\/(\d+)\/.*\.jpg$/i;
+			var steamImgUrlRe = /^(https?:\/\/)?steamcdn-a\.akamaihd\.net\/steam\/(app|sub)s\/(\d+)\/.*\.jpg$/i;
 			var sgIdRe = /^([\w\d]{5})$/;
 			/**
 			 * 
@@ -456,7 +474,7 @@ if(typeof $ === "undefined"){
 					return match[3];
 				match = url.match(steamImgUrlRe);
 				if(match)
-					return match[2];
+					return match[3];
 			};
 			
 			/**
@@ -602,7 +620,7 @@ if(typeof $ === "undefined"){
 			 *  Tests a regex agains a string and returns an array of all matches  
 			 *
 			 *  @memberof SgApi.Util
-			 *  @param {Regex} regex a regular expression
+			 *  @param {Regexp} regex a regular expression
 			 *  @param {string} text the string to test
 			 *  @return {Array} an array containing all the matches
 			 *  

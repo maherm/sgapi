@@ -4,7 +4,7 @@
 *			
 */
 
-SgApi.Plugins.register("Giveaway Tools", "0.1.0", function(){
+SgApi.Plugins.register("Giveaway Tools", "0.1.1", function(){
 	
 	/**
 	 * 
@@ -201,6 +201,17 @@ SgApi.Plugins.register("Giveaway Tools", "0.1.0", function(){
 					var cpStr = ui.cpElement.text();
 					return util.parseInteger(cpStr.substring(1, cpStr.length-2));
 				},
+				
+				/**
+				* 
+				* @memberof SgApi.Giveaways.Giveaway
+				* @return {string}
+				* @declared in sgapi_gatools.js
+				*/
+				get steamUrl(){
+					return ui.headerImageElement.attr("href");
+				},
+				
 				/**
 				* 
 				* @memberof SgApi.Giveaways.Giveaway
@@ -208,7 +219,7 @@ SgApi.Plugins.register("Giveaway Tools", "0.1.0", function(){
 				* @declared in sgapi_gatools.js
 				*/
 				get steamAppId(){
-					return util.extractId(ui.headerImageElement.attr("href"));
+					return util.extractId(this.steamUrl);
 				},
 				/**
 				* 
@@ -317,7 +328,7 @@ SgApi.Plugins.register("Giveaway Tools", "0.1.0", function(){
 				* @return {string}
 				* @declared in sgapi_gatools.js
 				*/
-				get thumbUrl(){return SgApi.Util.getGameThumbUrl(this.steamId);},
+				get thumbUrl(){return SgApi.Util.getGameThumbUrl(this);},
 				/**
 				* 
 				* @memberof SgApi.Giveaways.Giveaway
