@@ -1,12 +1,12 @@
 // ==UserScript==
 // @name         SgApi ScriptRegistry Example
 // @namespace    https://github.com/maherm/sgapi
-// @version      0.4
+// @version      0.5
 // @author       mahermen
 // @downloadURL  https://raw.githubusercontent.com/maherm/sgapi/master/examples/registry.user.js
 // @require      https://code.jquery.com/jquery-3.1.1.min.js
 // @require      https://raw.githubusercontent.com/maherm/sgapi/v0.1.3/sgapi.js
-// @resource     fix_require_example https://raw.githubusercontent.com/maherm/sgapi/v0.1.3/example_undo.css
+// @resource     fix_require_example https://raw.githubusercontent.com/maherm/sgapi/v0.1.3/examples/example_undo.css
 // @match        https://www.steamgifts.com/*
 // @grant        GM_getResourceText
 // ==/UserScript==
