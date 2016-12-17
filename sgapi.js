@@ -6,7 +6,7 @@
 if(typeof $ === "undefined"){
 	(function(){
 		var docUrl ="the documentation";
-		var errStr="jQuery access is required for SgApi to work. That means you must either do without any //@grant statement or explicitely //@require an jQuery instance. Please read "+docUrl;
+		var errStr=GM_info.script.name+": jQuery access is required for SgApi to work. That means you must either do without any //@grant statement or explicitely //@require an jQuery instance. Please read "+docUrl;
 		console.error(errStr);
 		throw new Error(errStr);
 	})();
@@ -473,7 +473,11 @@ if(typeof $ === "undefined"){
 			 
 			this.requireResourceCss = function(key){
 				var code = GM_getResourceText(key);
-				$("head").append("<style type='text/css'>"+code+"</style");
+				var cssId = "sgapi_resource_"+key;
+				if (!document.getElementById(cssId))
+				{
+					$("head").append("<style id='"+cssId+"' type='text/css'>"+code+"</style>");
+				};
 			}
 			
 			/**
@@ -484,17 +488,19 @@ if(typeof $ === "undefined"){
 			 * @declared in sgapi.js
 			 */
 			this.requireDeclaredStyles = function(){
-				for(key in GM_info.script.resources.filter(function(r){return r.url.endsWith(".css");})){
-					var resource = GM_info.script.resources[key];
+				util.scriptInfo().getResources("css").forEach(function(resource){
 					util.requireResourceCss(resource.name);
-				}
+				});
 			}
 
 			/**
 			 * 
-			 *  Loads a CSS file from another server an embedds it into the current page. 
+			 *  Links a remote css file into the current page.  
 			 *  If given a resource identifier instead of an URL, the resource with that name will be embedded.
 			 *  See alos {@link requireResourceCss}.
+			 *  
+			 *  
+			 *  Caution: You can not link files from raw.githubusercontent.com by providing an URL to this function, because GitHub prevents this by setting the "nosniff" header. You can, however, replace 'raw.githubusercontent.com' in your URL string by 'rawgit.com'. Rawgit.com is a service that removes this header. Note that rawgit is a service on it's own and not afiliated with GitHub.
 			 *  
 			 *  @param {string} cssUrl the CSS file URL. 
 
@@ -504,11 +510,17 @@ if(typeof $ === "undefined"){
 			 * @declared in sgapi.js
 			 */
 			this.requireCss = function(cssUrl){
-				if(GM_info.script.resources.filter(function(r){return r.name == cssUrl;}).length > 0){
+				if(util.scriptInfo().hasResource(cssUrl)){
 					util.requireResourceCss(cssUrl);
 					return;
 				}
 				
+				var rawGit = cssUrl.indexOf("//raw.githubusercontent.com");
+				
+				if(rawGit >= 0 && rawGit<7){
+					console.error(" You can not link files from raw.githubusercontent.com by providing an URL to this function, because GitHub prevents this by setting the 'nosniff' header. You can, however, replace 'raw.githubusercontent.com' in your URL string by 'rawgit.com'. Rawgit.com is a service that removes this header. Note that rawgit is a service on it's own and not afiliated with GitHub. Check https://github.com/rgrove/rawgit/wiki/Frequently-Asked-Questions for more details.");
+					return;
+				};
 				var cssId = "id_"+util.hashCode(cssUrl);
 				if (!document.getElementById(cssId))
 				{
@@ -605,6 +617,10 @@ if(typeof $ === "undefined"){
 				util.matchAll(scriptInfoRegex, str).forEach(function (item) {
 					var key = item[1];
 					var value = item[2];
+					if(key === "resource" && value){
+						var parts = value.split(/\s+/);
+						value = {name: parts[0], url: parts[1]};
+					}
 					if(result[key]){
 						if(!Array.isArray(result[key])){
 							var tmp = result[key];
@@ -612,11 +628,23 @@ if(typeof $ === "undefined"){
 						}
 						result[key].push(value);
 					}else{
-						if(key == "grant") //Make sure grant is always an array
+						if(["grant", "resource"].indexOf(key) >=0) //Make sure grant and resource are always arrays
 							value=[value];
 						result[key] = value;
 					}
 				});
+				result.grants = function(str){
+					return result.grant && result.grant.indexOf(str) >= 0;
+				};
+				result.getResources = function(filetype){
+					if (!result.resource)
+						return [];
+					return result.resource.filter(function(r){return r.url.trim().endsWith("."+filetype);})
+				}
+				result.hasResource = function(str){
+					return result.resource &&
+					result.resource.filter(function(r){return r.name == str;}).length > 0;
+				};
 				return result;
 			}
 			
