@@ -5,7 +5,7 @@
 * 	
 */
 
-SgApi.Plugins.register("Settings", "0.1.1", function(){
+SgApi.Plugins.register("Settings", "0.1.2", function(){
 	/**
 	 * 
 	 * @class Settings
@@ -302,7 +302,7 @@ SgApi.Plugins.register("Settings", "0.1.1", function(){
 			for(var i=0; i<setting.values.length;i++){
 				var isSelected = setting.value.indexOf(i) >= 0 ?"is-selected":"";
 				var optionName = setting.values[i];
-				var $chkDiv = '<div data-checkbox-value="'+i+'" class="form__checkbox '+isSelected+'"><i class="form__checkbox__default fa fa-circle-o"></i><i class="form__checkbox__hover fa fa-circle"></i><i class="form__checkbox__selected fa fa-check-circle"></i>'+optionName+'</div>';
+				var $chkDiv = '<div data-checkbox-value="'+i+'" class="sgapi__enum '+isSelected+'"><i class="form__checkbox__default fa fa-circle-o"></i><i class="form__checkbox__hover fa fa-circle"></i><i class="form__checkbox__selected fa fa-check-circle"></i>'+optionName+'</div>';
 				$div.append($chkDiv);
 			}
 			initEnum($div,setting, transform);
@@ -337,45 +337,33 @@ SgApi.Plugins.register("Settings", "0.1.1", function(){
 		function initEnum($div, setting){
 			if(!setting.editable)
 				return;
-			$div.on("click.sgapi", "div.form__checkbox", function(e){
+			$div.on("click.sgapi", "div.sgapi__enum", function(e){
+				
 				var $div = $(this);
 				var val = +$div.attr("data-checkbox-value");
 				if(setting.maxSelected == 1){
-					$div.siblings("div.form__checkbox").removeClass("is-selected");
+					$div.siblings("div.sgapi__enum").removeClass("is-selected");
 					setting.value=[val];
 					$div.addClass("is-selected");
 				}else{
+					
 					var idx = setting.value.indexOf(val);
 					if(idx >=0){
 						setting.value.splice(idx,1);
-						$div.toggleClass("is-selected");
+						$div.removeClass("is-selected");
 					}
 					else{
 						if(setting.value.length < setting.maxSelected){
 							setting.value.push(val);
-							$div.toggleClass("is-selected");
+							$div.addClass("is-selected");
 						}
 					}
 				}
-				
+
 				if(globalOptions.instantSubmit)
 					save();
+				
 			});
-		}
-		
-		function createCheckbox(setting){
-			var $div = $("<div>").addClass("sgapi__setting_bool");
-			var id = "sgapi__setting_"+encodedSettingsName+"_"+encodeCodeName(setting.name);
-			var $chkBox = $("<input type='checkbox'>").attr("name",id).attr("id",id).addClass("sgapi__checkbox");
-			var $label = $("<label>").attr("for", id).text(setting.name);
-			$chkBox.attr("checked", setting.value);
-			$div.append($chkBox).append($label);
-			if(setting.description){
-				var $descripton = $("<div>").addClass("form__input-description").text(setting.description);
-				$div.append($descripton);
-			}
-			initCheckbox($chkBox, setting);
-			return $div;
 		}
 		
 		function createTextInput(setting){
@@ -390,18 +378,6 @@ SgApi.Plugins.register("Settings", "0.1.1", function(){
 				$div.append($descripton);
 			}
 			return $input;
-		}
-
-		function initCheckbox($checkbox, setting){
-			if(setting.editable){
-				$checkbox.change(function(){
-					setValue(setting.name, this.checked);
-					if(globalOptions.instantSubmit)
-						save();
-				});
-			}else{
-				$checkbox.attr("disabled", "true");
-			}
 		}
 		
 		function initInput($input, setting, validator){
@@ -482,7 +458,7 @@ SgApi.Plugins.register("Settings", "0.1.1", function(){
 		function mergeSettings(savedSettings, defaultSettings){
 			var result = {};
 			for(var setting in defaultSettings){
-				result[setting] = $.extend(true, {},defaultSettings[setting], savedSettings[setting]);
+				result[setting] = $.extend({},defaultSettings[setting], savedSettings[setting]);
 			}
 			return result;
 		}	
@@ -543,6 +519,28 @@ SgApi.Plugins.register("Settings", "0.1.1", function(){
 		margin: 2px 6px 2px 2px; \
 		vertical-align: top; \
 	} \
+	.sgapi__enum {\
+		display: -webkit-box;\
+		display: -moz-box;\
+		display: -ms-flexbox;\
+		display: -webkit-flex;\
+		display: flex;\
+		cursor: pointer;\
+		color: #6b7a8c;\
+		padding: 7px 0\
+	}\
+	.sgapi__enum i {\
+		margin-right: 7px\
+	}\
+	.sgapi__enum:not(:last-of-type) {\
+		border-bottom: 1px dotted #d2d6e0\
+	}\
+	.sgapi__enum.is-selected {\
+		color: #4B72D4\
+	}\
+	.sgapi__enum:not(:hover) .form__checkbox__hover,.sgapi__enum.is-selected .form__checkbox__hover,.sgapi__enum:not(.is-selected) .form__checkbox__selected,.sgapi__enum:hover .form__checkbox__default,.sgapi__enum.is-selected .form__checkbox__default {\
+		display: none\
+	}\
 	.sgapi__info_box{ \
 		font-family: monospace; \
 		border: 1px inset; \
