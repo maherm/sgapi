@@ -1,18 +1,18 @@
 // ==UserScript==
 // @name         SgApi Notifications Example
 // @namespace    https://github.com/maherm/sgapi/
-// @version      0.2
+// @version      0.3
 // @author       mahermen
 // @downloadURL  https://raw.githubusercontent.com/maherm/sgapi/master/examples/notifications.user.js
-// @require      https://raw.githubusercontent.com/maherm/sgapi/v0.1.2/sgapi.js
-// @require      https://raw.githubusercontent.com/maherm/sgapi/v0.1.2/sgapi_notifications.js
-// @require      https://raw.githubusercontent.com/maherm/sgapi/v0.1.2/sgapi_gatools.js
+// @require      https://raw.githubusercontent.com/maherm/sgapi/v0.1.3/sgapi.js
+// @require      https://raw.githubusercontent.com/maherm/sgapi/v0.1.3/sgapi_notifications.js
+// @require      https://raw.githubusercontent.com/maherm/sgapi/v0.1.3/sgapi_gatools.js
 // @match        https://www.steamgifts.com/giveaway/*
 // ==/UserScript==
 
 use(SgApi);
 
-//This Notification will be displayed every time until the user disposes it by clicking the "x"
+//This Notification will be displayed every time until the user disposes it by clicking the "x" - then it will be displayed never again
 Notifications.notify("info", "New Version: 2.3 - New Features include nicer header and world domination", {key:"Version23"});
 
 var minutes = 2;
