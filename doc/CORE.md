@@ -1,3 +1,60 @@
+## Module: Core
+
+**Module Name:** Core  
+**Examples:** [1](https://github.com/maherm/sgapi/blob/master/examples/registry.user.js), [2](https://github.com/maherm/sgapi/blob/master/examples/require.user.js) 
+**Documentation:** [Github](https://github.com/maherm/sgapi/tree/master/doc/CORE.md)  
+**Include Code:**
+```javascript
+//@require  https://raw.githubusercontent.com/maherm/sgapi/v0.1.5/sgapi.js 
+```
+
+### Core - Example
+```javascript
+// ==UserScript==
+// @name         Mini Example Core
+// @require      https://raw.githubusercontent.com/maherm/sgapi/v0.1.5/sgapi.js
+// @resource     css https://raw.githubusercontent.com/maherm/sgapi/v0.1.5/examples/example.css
+// @match        https://www.steamgifts.com/*
+// ==/UserScript==
+
+use(SgApi.Util);
+requireCss('css');
+```
+
+### Core - About
+The Core module is the glue holding together the API. It's mandatory to @require and must be @required before any plugin. It also provides the Util package, that helps with some common tasks. The most interesting function in Util at the moment is `requireCss()`. The function links a remote css file, so that you won't have to encode the css in multiline strings anymore.
+
+```javascript
+SgApi.Util.requireCss("https://www.server.com/css/default.css");
+```
+You can also include your css file as a @resource and inject in at runtime. The upside of this strategy is, that the css will be cached by your script manager and won't require an additional request every time. You'll need to @grant GM_getResourceText for this feature. But remember: resource caching is - just like @require caching - forever and won't reflect changes to your remote resource. So you always need to use a versioned url!
+While developing, you can use @resource with a file:// url to your local css file. These changes will be recognized, since the script manager won't cache it.
+
+```javascript
+// @resource     myCssFile https://www.server.com/css/default-v1.2.3.css
+// @grant        GM_getResourceText
+// ==/UserScript==
+
+ SgApi.Util.requireCss("myCssFile");
+```
+
+Please note that you can not link files from raw.githubusercontent.com by providing an URL to requireCss(), because GitHub prevents this by setting the 'nosniff' header. You can, however, replace 'raw.githubusercontent.com' in your URL string by 'rawgit.com'. Rawgit.com is a service that removes this header. Note that rawgit is a service on it's own and not afiliated with GitHub. Check https://github.com/rgrove/rawgit/wiki/Frequently-Asked-Questions for more details. For embedding CSS from your resources, you CAN use raw.githubusercontent.com, because in this case the code is embedded in the page (<style>[code]</style>) instead of linked (<link src='url'>).
+
+
+Another interesting feature of the Core module is that it maintains a Registry of all Userscripts in the current page impression that incorporate SgApi. Every script that @requires SgApi is automatically registered. So, if your script for example has compatibility issues with another script, you could just do something like this (provided the other script uses SgApi, too):
+
+```javascript
+if(SgApi.ScriptRegistry.existsMin("SgApi RequireCss Example", "0.1")){
+	console.log("Uuugh, that's ugly. Let me fix that for you :-)");
+	SgApi.Util.requireCss("fix_require_example");
+}else{
+	console.log("You're good, nothing to fix!");
+}
+});
+```
+
+## Core: JsDoc
+
 <a name="SgApi"></a>
 
 ## .SgApi : <code>object</code>
@@ -34,6 +91,7 @@
         * [.this.parseBool(value)](#SgApi.Util.this.parseBool) ⇒ <code>boolean</code>
         * [.this.buildGiveawayUrl(id)](#SgApi.Util.this.buildGiveawayUrl) ⇒ <code>string</code>
         * [.this.buildDiscussionUrl(id)](#SgApi.Util.this.buildDiscussionUrl) ⇒ <code>string</code>
+        * [.this.getAppOrSub(urlOrGa)](#SgApi.Util.this.getAppOrSub) ⇒ string
         * [.this.getGameThumbUrl(steamAppId)](#SgApi.Util.this.getGameThumbUrl) ⇒ <code>string</code>
         * [.this.getCurrentUrl([context])](#SgApi.Util.this.getCurrentUrl) ⇒ <code>string</code>
         * [.this.isHomePage([context])](#SgApi.Util.this.isHomePage) ⇒ <code>boolean</code>
@@ -355,6 +413,7 @@ SgApi.Util is a central collection of useful recurring tasks. It is recommended
     * [.this.parseBool(value)](#SgApi.Util.this.parseBool) ⇒ <code>boolean</code>
     * [.this.buildGiveawayUrl(id)](#SgApi.Util.this.buildGiveawayUrl) ⇒ <code>string</code>
     * [.this.buildDiscussionUrl(id)](#SgApi.Util.this.buildDiscussionUrl) ⇒ <code>string</code>
+    * [.this.getAppOrSub(urlOrGa)](#SgApi.Util.this.getAppOrSub) ⇒
     * [.this.getGameThumbUrl(steamAppId)](#SgApi.Util.this.getGameThumbUrl) ⇒ <code>string</code>
     * [.this.getCurrentUrl([context])](#SgApi.Util.this.getCurrentUrl) ⇒ <code>string</code>
     * [.this.isHomePage([context])](#SgApi.Util.this.isHomePage) ⇒ <code>boolean</code>
@@ -412,6 +471,17 @@ Builds an url to a discussion.
 | Param | Type | Description |
 | --- | --- | --- |
 | id | <code>string</code> | the discussion id |
+
+<a name="SgApi.Util.this.getAppOrSub"></a>
+
+#### Util.this.getAppOrSub(urlOrGa) ⇒
+**Kind**: static method of <code>[Util](#SgApi.Util)</code>  
+**Returns**: either "app" or "sub", or undefined if the type could not be determined  
+**Declared**: in sgapi.js  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| urlOrGa | <code>string</code> &#124; <code>Giveaway</code> | a steam store url or a giveaway object from the SgApi GA Tools |
 
 <a name="SgApi.Util.this.getGameThumbUrl"></a>
 
@@ -613,7 +683,7 @@ Tests a regex agains a string and returns an array of all matches
 
 | Param | Type | Description |
 | --- | --- | --- |
-| regex | <code>Regex</code> | a regular expression |
+| regex | <code>Regexp</code> | a regular expression |
 | text | <code>string</code> | the string to test |
 
 <a name="SgApi.Util.this.scriptInfo"></a>

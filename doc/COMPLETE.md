@@ -76,6 +76,7 @@
         * [.this.parseBool(value)](#SgApi.Util.this.parseBool) ⇒ <code>boolean</code>
         * [.this.buildGiveawayUrl(id)](#SgApi.Util.this.buildGiveawayUrl) ⇒ <code>string</code>
         * [.this.buildDiscussionUrl(id)](#SgApi.Util.this.buildDiscussionUrl) ⇒ <code>string</code>
+        * [.this.getAppOrSub(urlOrGa)](#SgApi.Util.this.getAppOrSub) ⇒
         * [.this.getGameThumbUrl(steamAppId)](#SgApi.Util.this.getGameThumbUrl) ⇒ <code>string</code>
         * [.this.getCurrentUrl([context])](#SgApi.Util.this.getCurrentUrl) ⇒ <code>string</code>
         * [.this.isHomePage([context])](#SgApi.Util.this.isHomePage) ⇒ <code>boolean</code>
@@ -103,6 +104,7 @@
             * [.id](#SgApi.Giveaways.Giveaway.id) ⇒ <code>string</code>
             * [.gameTitle](#SgApi.Giveaways.Giveaway.gameTitle) ⇒ <code>string</code>
             * [.cp](#SgApi.Giveaways.Giveaway.cp) ⇒ <code>int</code>
+            * [.steamUrl](#SgApi.Giveaways.Giveaway.steamUrl) ⇒ <code>string</code>
             * [.steamAppId](#SgApi.Giveaways.Giveaway.steamAppId) ⇒ <code>string</code>
             * [.copies](#SgApi.Giveaways.Giveaway.copies) ⇒ <code>int</code>
             * [.contributorLevel](#SgApi.Giveaways.Giveaway.contributorLevel) ⇒ <code>int</code>
@@ -849,6 +851,7 @@ SgApi.Util is a central collection of useful recurring tasks. It is recommended
     * [.this.parseBool(value)](#SgApi.Util.this.parseBool) ⇒ <code>boolean</code>
     * [.this.buildGiveawayUrl(id)](#SgApi.Util.this.buildGiveawayUrl) ⇒ <code>string</code>
     * [.this.buildDiscussionUrl(id)](#SgApi.Util.this.buildDiscussionUrl) ⇒ <code>string</code>
+    * [.this.getAppOrSub(urlOrGa)](#SgApi.Util.this.getAppOrSub) ⇒
     * [.this.getGameThumbUrl(steamAppId)](#SgApi.Util.this.getGameThumbUrl) ⇒ <code>string</code>
     * [.this.getCurrentUrl([context])](#SgApi.Util.this.getCurrentUrl) ⇒ <code>string</code>
     * [.this.isHomePage([context])](#SgApi.Util.this.isHomePage) ⇒ <code>boolean</code>
@@ -906,6 +909,17 @@ Builds an url to a discussion.
 | Param | Type | Description |
 | --- | --- | --- |
 | id | <code>string</code> | the discussion id |
+
+<a name="SgApi.Util.this.getAppOrSub"></a>
+
+#### Util.this.getAppOrSub(urlOrGa) ⇒
+**Kind**: static method of <code>[Util](#SgApi.Util)</code>  
+**Returns**: either "app" or "sub", or undefined if the type could not be determined  
+**Declared**: in sgapi.js  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| urlOrGa | <code>string</code> &#124; <code>Giveaway</code> | a steam store url or a giveaway object from the SgApi GA Tools |
 
 <a name="SgApi.Util.this.getGameThumbUrl"></a>
 
@@ -1107,7 +1121,7 @@ Tests a regex agains a string and returns an array of all matches
 
 | Param | Type | Description |
 | --- | --- | --- |
-| regex | <code>Regex</code> | a regular expression |
+| regex | <code>Regexp</code> | a regular expression |
 | text | <code>string</code> | the string to test |
 
 <a name="SgApi.Util.this.scriptInfo"></a>
@@ -1193,6 +1207,7 @@ Creates and shows a new notification. If there is already a notificaiton display
         * [.id](#SgApi.Giveaways.Giveaway.id) ⇒ <code>string</code>
         * [.gameTitle](#SgApi.Giveaways.Giveaway.gameTitle) ⇒ <code>string</code>
         * [.cp](#SgApi.Giveaways.Giveaway.cp) ⇒ <code>int</code>
+        * [.steamUrl](#SgApi.Giveaways.Giveaway.steamUrl) ⇒ <code>string</code>
         * [.steamAppId](#SgApi.Giveaways.Giveaway.steamAppId) ⇒ <code>string</code>
         * [.copies](#SgApi.Giveaways.Giveaway.copies) ⇒ <code>int</code>
         * [.contributorLevel](#SgApi.Giveaways.Giveaway.contributorLevel) ⇒ <code>int</code>
@@ -1225,6 +1240,7 @@ Creates and shows a new notification. If there is already a notificaiton display
     * [.id](#SgApi.Giveaways.Giveaway.id) ⇒ <code>string</code>
     * [.gameTitle](#SgApi.Giveaways.Giveaway.gameTitle) ⇒ <code>string</code>
     * [.cp](#SgApi.Giveaways.Giveaway.cp) ⇒ <code>int</code>
+    * [.steamUrl](#SgApi.Giveaways.Giveaway.steamUrl) ⇒ <code>string</code>
     * [.steamAppId](#SgApi.Giveaways.Giveaway.steamAppId) ⇒ <code>string</code>
     * [.copies](#SgApi.Giveaways.Giveaway.copies) ⇒ <code>int</code>
     * [.contributorLevel](#SgApi.Giveaways.Giveaway.contributorLevel) ⇒ <code>int</code>
@@ -1262,6 +1278,11 @@ Read-only representation of a giveaway.	Getters should be self-explanatory.
 <a name="SgApi.Giveaways.Giveaway.cp"></a>
 
 ##### Giveaway.cp ⇒ <code>int</code>
+**Kind**: static property of <code>[Giveaway](#SgApi.Giveaways.Giveaway)</code>  
+**Declared**: in sgapi_gatools.js  
+<a name="SgApi.Giveaways.Giveaway.steamUrl"></a>
+
+##### Giveaway.steamUrl ⇒ <code>string</code>
 **Kind**: static property of <code>[Giveaway](#SgApi.Giveaways.Giveaway)</code>  
 **Declared**: in sgapi_gatools.js  
 <a name="SgApi.Giveaways.Giveaway.steamAppId"></a>
@@ -1501,6 +1522,7 @@ Creates and shows a new notification. If there is already a notificaiton display
         * [.this.parseBool(value)](#SgApi.Util.this.parseBool) ⇒ <code>boolean</code>
         * [.this.buildGiveawayUrl(id)](#SgApi.Util.this.buildGiveawayUrl) ⇒ <code>string</code>
         * [.this.buildDiscussionUrl(id)](#SgApi.Util.this.buildDiscussionUrl) ⇒ <code>string</code>
+        * [.this.getAppOrSub(urlOrGa)](#SgApi.Util.this.getAppOrSub) ⇒
         * [.this.getGameThumbUrl(steamAppId)](#SgApi.Util.this.getGameThumbUrl) ⇒ <code>string</code>
         * [.this.getCurrentUrl([context])](#SgApi.Util.this.getCurrentUrl) ⇒ <code>string</code>
         * [.this.isHomePage([context])](#SgApi.Util.this.isHomePage) ⇒ <code>boolean</code>
@@ -1528,6 +1550,7 @@ Creates and shows a new notification. If there is already a notificaiton display
             * [.id](#SgApi.Giveaways.Giveaway.id) ⇒ <code>string</code>
             * [.gameTitle](#SgApi.Giveaways.Giveaway.gameTitle) ⇒ <code>string</code>
             * [.cp](#SgApi.Giveaways.Giveaway.cp) ⇒ <code>int</code>
+            * [.steamUrl](#SgApi.Giveaways.Giveaway.steamUrl) ⇒ <code>string</code>
             * [.steamAppId](#SgApi.Giveaways.Giveaway.steamAppId) ⇒ <code>string</code>
             * [.copies](#SgApi.Giveaways.Giveaway.copies) ⇒ <code>int</code>
             * [.contributorLevel](#SgApi.Giveaways.Giveaway.contributorLevel) ⇒ <code>int</code>
@@ -2274,6 +2297,7 @@ SgApi.Util is a central collection of useful recurring tasks. It is recommended
     * [.this.parseBool(value)](#SgApi.Util.this.parseBool) ⇒ <code>boolean</code>
     * [.this.buildGiveawayUrl(id)](#SgApi.Util.this.buildGiveawayUrl) ⇒ <code>string</code>
     * [.this.buildDiscussionUrl(id)](#SgApi.Util.this.buildDiscussionUrl) ⇒ <code>string</code>
+    * [.this.getAppOrSub(urlOrGa)](#SgApi.Util.this.getAppOrSub) ⇒
     * [.this.getGameThumbUrl(steamAppId)](#SgApi.Util.this.getGameThumbUrl) ⇒ <code>string</code>
     * [.this.getCurrentUrl([context])](#SgApi.Util.this.getCurrentUrl) ⇒ <code>string</code>
     * [.this.isHomePage([context])](#SgApi.Util.this.isHomePage) ⇒ <code>boolean</code>
@@ -2331,6 +2355,17 @@ Builds an url to a discussion.
 | Param | Type | Description |
 | --- | --- | --- |
 | id | <code>string</code> | the discussion id |
+
+<a name="SgApi.Util.this.getAppOrSub"></a>
+
+#### Util.this.getAppOrSub(urlOrGa) ⇒
+**Kind**: static method of <code>[Util](#SgApi.Util)</code>  
+**Returns**: either "app" or "sub", or undefined if the type could not be determined  
+**Declared**: in sgapi.js  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| urlOrGa | <code>string</code> &#124; <code>Giveaway</code> | a steam store url or a giveaway object from the SgApi GA Tools |
 
 <a name="SgApi.Util.this.getGameThumbUrl"></a>
 
@@ -2532,7 +2567,7 @@ Tests a regex agains a string and returns an array of all matches
 
 | Param | Type | Description |
 | --- | --- | --- |
-| regex | <code>Regex</code> | a regular expression |
+| regex | <code>Regexp</code> | a regular expression |
 | text | <code>string</code> | the string to test |
 
 <a name="SgApi.Util.this.scriptInfo"></a>
@@ -2618,6 +2653,7 @@ Creates and shows a new notification. If there is already a notificaiton display
         * [.id](#SgApi.Giveaways.Giveaway.id) ⇒ <code>string</code>
         * [.gameTitle](#SgApi.Giveaways.Giveaway.gameTitle) ⇒ <code>string</code>
         * [.cp](#SgApi.Giveaways.Giveaway.cp) ⇒ <code>int</code>
+        * [.steamUrl](#SgApi.Giveaways.Giveaway.steamUrl) ⇒ <code>string</code>
         * [.steamAppId](#SgApi.Giveaways.Giveaway.steamAppId) ⇒ <code>string</code>
         * [.copies](#SgApi.Giveaways.Giveaway.copies) ⇒ <code>int</code>
         * [.contributorLevel](#SgApi.Giveaways.Giveaway.contributorLevel) ⇒ <code>int</code>
@@ -2650,6 +2686,7 @@ Creates and shows a new notification. If there is already a notificaiton display
     * [.id](#SgApi.Giveaways.Giveaway.id) ⇒ <code>string</code>
     * [.gameTitle](#SgApi.Giveaways.Giveaway.gameTitle) ⇒ <code>string</code>
     * [.cp](#SgApi.Giveaways.Giveaway.cp) ⇒ <code>int</code>
+    * [.steamUrl](#SgApi.Giveaways.Giveaway.steamUrl) ⇒ <code>string</code>
     * [.steamAppId](#SgApi.Giveaways.Giveaway.steamAppId) ⇒ <code>string</code>
     * [.copies](#SgApi.Giveaways.Giveaway.copies) ⇒ <code>int</code>
     * [.contributorLevel](#SgApi.Giveaways.Giveaway.contributorLevel) ⇒ <code>int</code>
@@ -2687,6 +2724,11 @@ Read-only representation of a giveaway.	Getters should be self-explanatory.
 <a name="SgApi.Giveaways.Giveaway.cp"></a>
 
 ##### Giveaway.cp ⇒ <code>int</code>
+**Kind**: static property of <code>[Giveaway](#SgApi.Giveaways.Giveaway)</code>  
+**Declared**: in sgapi_gatools.js  
+<a name="SgApi.Giveaways.Giveaway.steamUrl"></a>
+
+##### Giveaway.steamUrl ⇒ <code>string</code>
 **Kind**: static property of <code>[Giveaway](#SgApi.Giveaways.Giveaway)</code>  
 **Declared**: in sgapi_gatools.js  
 <a name="SgApi.Giveaways.Giveaway.steamAppId"></a>

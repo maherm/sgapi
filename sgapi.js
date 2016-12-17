@@ -278,7 +278,7 @@ if(typeof $ === "undefined"){
 			 *  Builds an url to a giveway.
 			 *  
 			 *  @param {string} id the giveaway id
-			 *  @returns {string} the URL to the giveaway with the given ID
+			 *  @return {string} the URL to the giveaway with the given ID
 			 *  
 			 * @memberof SgApi.Util
 			 * @declared in sgapi.js
@@ -292,7 +292,7 @@ if(typeof $ === "undefined"){
 			 *  Builds an url to a discussion.
 			 *  
 			 *  @param {string} id  the discussion id
-			 *  @returns {string}  the URL to the discussion with the given ID
+			 *  @return {string}  the URL to the discussion with the given ID
 			 *  
 			 * @memberof SgApi.Util
 			 
@@ -306,6 +306,8 @@ if(typeof $ === "undefined"){
 			/**
 			 *  @param {string|Giveaway} urlOrGa a steam store url or a giveaway object from the SgApi GA Tools
 			 *  @return either "app" or "sub", or undefined if the type could not be determined
+			 *  @declared in sgapi.js
+			 *  @memberof SgApi.Util
 			 */
 			this.getAppOrSub = function(urlOrGa){
 				url = typeof urlOrGa === "string" ? urlOrGa : urlOrGa.steamUrl;
