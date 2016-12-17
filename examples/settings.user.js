@@ -1,11 +1,11 @@
 // ==UserScript==
 // @name         SgApi Settings Example
 // @namespace    https://github.com/maherm/sgapi/
-// @version      0.1
+// @version      0.2
 // @author       mahermen
 // @downloadURL  https://raw.githubusercontent.com/maherm/sgapi/master/examples/settings.user.js
-// @require      https://raw.githubusercontent.com/maherm/sgapi/v0.1.0/sgapi.js
-// @require      https://raw.githubusercontent.com/maherm/sgapi/v0.1.0/sgapi_settings.js
+// @require      https://raw.githubusercontent.com/maherm/sgapi/v0.1.2/sgapi.js
+// @require      https://raw.githubusercontent.com/maherm/sgapi/v0.1.2/sgapi_settings.js
 // @match        https://www.steamgifts.com/*
 // @grant        GM_getValue
 // @grant        GM_setValue
