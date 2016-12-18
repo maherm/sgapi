@@ -520,7 +520,7 @@ if(typeof $ === "undefined"){
 			 
 			this.requireResourceCss = function(key){
 				var code = GM_getResourceText(key);
-				var cssId = "sgapi_resource_"+key;
+				var cssId = "sgapi_resource_"+util.hashCode(util.scriptInfo().name)+"_"+key;
 				if (!document.getElementById(cssId))
 				{
 					$("head").append("<style id='"+cssId+"' type='text/css'>"+code+"</style>");
