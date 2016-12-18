@@ -11,8 +11,6 @@ Enough chitchat, let's cut to the chase.
 
 # Quickstart
 
-> **Notice: This thread contains lots of code. It is recommended to install the [SG Syntax Highlighting](https://www.steamgifts.com/discussion/qakEi/userscript-sg-syntax-highlighting) script before you continue.**
-
 Include this in your header:
 
 ```javascript
