@@ -1,12 +1,12 @@
 // ==UserScript==
 // @name         SgApi Giveaway Tools Example
 // @namespace    https://github.com/maherm/sgapi/
-// @version      0.5
+// @version      0.6
 // @author       mahermen
 // @downloadURL  https://raw.githubusercontent.com/maherm/sgapi/master/examples/giveaways.user.js
-// @require      https://raw.githubusercontent.com/maherm/sgapi/v0.1.5/sgapi.js
-// @require      https://raw.githubusercontent.com/maherm/sgapi/v0.1.5/sgapi_gatools.js
-// @require      https://raw.githubusercontent.com/maherm/sgapi/v0.1.5/sgapi_wishlist.js
+// @require      https://raw.githubusercontent.com/maherm/sgapi/v0.1.6/sgapi.js
+// @require      https://raw.githubusercontent.com/maherm/sgapi/v0.1.6/sgapi_gatools.js
+// @require      https://raw.githubusercontent.com/maherm/sgapi/v0.1.6/sgapi_wishlist.js
 // @match        https://www.steamgifts.com/*
 // @grant none
 // ==/UserScript==

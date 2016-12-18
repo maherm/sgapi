@@ -1,12 +1,12 @@
 // ==UserScript==
 // @name         SgApi RequireCss Example
 // @namespace    https://github.com/maherm/sgapi/
-// @version      0.5
+// @version      0.6
 // @author       mahermen
 // @downloadURL  https://raw.githubusercontent.com/maherm/sgapi/master/examples/require.user.js
 // @require      https://code.jquery.com/jquery-3.1.1.min.js
-// @require      https://raw.githubusercontent.com/maherm/sgapi/v0.1.5/sgapi.js
-// @resource     css https://raw.githubusercontent.com/maherm/sgapi/v0.1.5/examples/example.css
+// @require      https://raw.githubusercontent.com/maherm/sgapi/v0.1.6/sgapi.js
+// @resource     css https://raw.githubusercontent.com/maherm/sgapi/v0.1.6/examples/example.css
 // @match        https://www.steamgifts.com/*
 // @grant        GM_getResourceText
 // ==/UserScript==

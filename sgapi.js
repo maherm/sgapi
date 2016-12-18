@@ -510,7 +510,7 @@ if(typeof $ === "undefined"){
 			 *  @param {string} key the resource name used with @resource
 			 *  @memberof SgApi.Util
 			 *  @example
-			 *  // @resource     css https://manuelhermenau.de/scripts/test.css
+			 *  // @resource     css https://raw.githubusercontent.com/maherm/sgapi/311cb9/examples/example.css
 			 *	// @grant        GM_getResourceText
 			 *	// ==/UserScript==
 			 *	use(SgApi.Util);

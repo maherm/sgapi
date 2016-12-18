@@ -14,11 +14,11 @@ Enough chitchat, let's cut to the chase.
 Include this in your header:
 
 ```javascript
-    // @require      https://raw.githubusercontent.com/maherm/sgapi/v0.1.5/sgapi.js
-    // @require      https://raw.githubusercontent.com/maherm/sgapi/v0.1.5/sgapi_settings.js
-    // @require      https://raw.githubusercontent.com/maherm/sgapi/v0.1.5/sgapi_gatools.js
-    // @require      https://raw.githubusercontent.com/maherm/sgapi/v0.1.5/sgapi_wishlist.js
-    // @require      https://raw.githubusercontent.com/maherm/sgapi/v0.1.5/sgapi_notifications.js
+    // @require      https://raw.githubusercontent.com/maherm/sgapi/v0.1.6/sgapi.js
+    // @require      https://raw.githubusercontent.com/maherm/sgapi/v0.1.6/sgapi_settings.js
+    // @require      https://raw.githubusercontent.com/maherm/sgapi/v0.1.6/sgapi_gatools.js
+    // @require      https://raw.githubusercontent.com/maherm/sgapi/v0.1.6/sgapi_wishlist.js
+    // @require      https://raw.githubusercontent.com/maherm/sgapi/v0.1.6/sgapi_notifications.js
 ```
 
 Now you can access SgApi using the ```SgApi``` object.
@@ -37,14 +37,14 @@ Check out the [Example Scripts](https://github.com/maherm/sgapi/tree/master/exam
 
 To use SgApi, you first need to @require the Core Module:
 ```javascript
-    // @require      https://raw.githubusercontent.com/maherm/sgapi/v0.1.5/sgapi.js
+    // @require      https://raw.githubusercontent.com/maherm/sgapi/v0.1.6/sgapi.js
 ```
 	
 If you want to use any plugins, e.g. the "Giveaway Tools", you need to require those, too. Plugins always only depend on the core module and never depend on each other, so you can mix them all you want, as long as you @require ```sgapi.js``` first.
 
 ```javascript
-    // @require     https://raw.githubusercontent.com/maherm/sgapi/v0.1.5/sgapi.js
-	// @require     https://raw.githubusercontent.com/maherm/sgapi/v0.1.5/sgapi_gatools.js
+    // @require     https://raw.githubusercontent.com/maherm/sgapi/v0.1.6/sgapi.js
+	// @require     https://raw.githubusercontent.com/maherm/sgapi/v0.1.6/sgapi_gatools.js
 ```	
 
 Make sure you NEVER require the head of a branch but ALWAYS use links to a specific version. 
@@ -55,7 +55,7 @@ Once required, you can access any SgApi feature via the global SgApi object, e.g
 ```javascript
 // ==UserScript==
 // @name        Test Api
-// @require     https://raw.githubusercontent.com/maherm/sgapi/v0.1.5/sgapi.js
+// @require     https://raw.githubusercontent.com/maherm/sgapi/v0.1.6/sgapi.js
 // ==/UserScript==
 
 SgApi.Util.requireCss("https://rawgit.com/maherm/sgapi/master/examples/example.css");
@@ -65,7 +65,7 @@ The only exception is the use() function, which is not accessible via the SgApi 
  ```javascript
 // ==UserScript==
 // @name        Test Api
-// @require     https://raw.githubusercontent.com/maherm/sgapi/v0.1.5/sgapi.js
+// @require     https://raw.githubusercontent.com/maherm/sgapi/v0.1.6/sgapi.js
 // ==/UserScript==
 use(SgApi.Util);
 
@@ -132,15 +132,15 @@ In the following I will explain the currently existing modules and outline what 
 **Documentation:** [Github](https://github.com/maherm/sgapi/tree/master/doc/CORE.md)  
 **Include Code:**
 ```javascript
-//@require  https://raw.githubusercontent.com/maherm/sgapi/v0.1.5/sgapi.js 
+//@require  https://raw.githubusercontent.com/maherm/sgapi/v0.1.6/sgapi.js 
 ```
 
 ### Core - Example
 ```javascript
 // ==UserScript==
 // @name         Mini Example Core
-// @require      https://raw.githubusercontent.com/maherm/sgapi/v0.1.5/sgapi.js
-// @resource     css https://raw.githubusercontent.com/maherm/sgapi/v0.1.5/examples/example.css
+// @require      https://raw.githubusercontent.com/maherm/sgapi/v0.1.6/sgapi.js
+// @resource     css https://raw.githubusercontent.com/maherm/sgapi/v0.1.6/examples/example.css
 // @match        https://www.steamgifts.com/*
 // ==/UserScript==
 
@@ -241,7 +241,7 @@ If you intend to use this, have a look at [the example](https://github.com/maher
 **Documentation:** [Github](https://github.com/maherm/sgapi/blob/master/SETTINGS.md)  
 **Include Code:**
 ```javascript
-//@require  https://raw.githubusercontent.com/maherm/sgapi/v0.1.5/sgapi_settings.js
+//@require  https://raw.githubusercontent.com/maherm/sgapi/v0.1.6/sgapi_settings.js
 ```
 
 ### Settings - Example
@@ -249,8 +249,8 @@ If you intend to use this, have a look at [the example](https://github.com/maher
 // ==UserScript==
 // @name         Mini Example Settings
 // @require      https://code.jquery.com/jquery-3.1.1.min.js
-// @require      https://raw.githubusercontent.com/maherm/sgapi/v0.1.5/sgapi.js
-// @require      https://raw.githubusercontent.com/maherm/sgapi/v0.1.5/sgapi_settings.js
+// @require      https://raw.githubusercontent.com/maherm/sgapi/v0.1.6/sgapi.js
+// @require      https://raw.githubusercontent.com/maherm/sgapi/v0.1.6/sgapi_settings.js
 // @include      http*://www.steamgifts.com/*
 // ==/UserScript==
 
@@ -338,15 +338,15 @@ Although it is possible to define a custom section for your Settings to reside i
 **Documentation:** [Github](https://github.com/maherm/sgapi/blob/master/doc/GATOOLS.md)
 **Include Code:**
 ```javascript
-//@require  https://raw.githubusercontent.com/maherm/sgapi/v0.1.5/sgapi_gatools.js
+//@require  https://raw.githubusercontent.com/maherm/sgapi/v0.1.6/sgapi_gatools.js
 ```
 
 ### Giveaway Tools - Example
 ```javascript
 // ==UserScript==
 // @name         Mini Giveaway Tools Example
-// @require      https://raw.githubusercontent.com/maherm/sgapi/v0.1.5/sgapi.js
-// @require      https://raw.githubusercontent.com/maherm/sgapi/v0.1.5/sgapi_gatools.js
+// @require      https://raw.githubusercontent.com/maherm/sgapi/v0.1.6/sgapi.js
+// @require      https://raw.githubusercontent.com/maherm/sgapi/v0.1.6/sgapi_gatools.js
 // @match        https://www.steamgifts.com/*
 // ==/UserScript==
 
@@ -414,16 +414,16 @@ The Giveaway Tools provide a handy interface to read Giveaway Data. It also exte
 **Documentation:** [Github](https://github.com/maherm/sgapi/blob/master/doc/WISHLIST.md)  
 **Include Code:**  
 ```javascript
-//@require  https://raw.githubusercontent.com/maherm/sgapi/v0.1.5/sgapi_wishlist.js
+//@require  https://raw.githubusercontent.com/maherm/sgapi/v0.1.6/sgapi_wishlist.js
 ```
 
 ### Wishlist - Example
 ```javascript
 // ==UserScript==
 // @name         Mini Wishlist Example
-// @require      https://raw.githubusercontent.com/maherm/sgapi/v0.1.5/sgapi.js
-// @require      https://raw.githubusercontent.com/maherm/sgapi/v0.1.5/sgapi_gatools.js
-// @require      https://raw.githubusercontent.com/maherm/sgapi/v0.1.5/sgapi_wishlist.js
+// @require      https://raw.githubusercontent.com/maherm/sgapi/v0.1.6/sgapi.js
+// @require      https://raw.githubusercontent.com/maherm/sgapi/v0.1.6/sgapi_gatools.js
+// @require      https://raw.githubusercontent.com/maherm/sgapi/v0.1.6/sgapi_wishlist.js
 // @match        https://www.steamgifts.com/*
 // ==/UserScript==
 
@@ -462,15 +462,15 @@ Because a sync may happen, you need to get your wishlist asynchronously
 **Documentation:** [Github](https://github.com/maherm/sgapi/blob/master/doc/NOTIFICATIONS.md)  
 **Include Code:**  
 ```javascript
-//@require  https://raw.githubusercontent.com/maherm/sgapi/v0.1.5/sgapi_notifications.js
+//@require  https://raw.githubusercontent.com/maherm/sgapi/v0.1.6/sgapi_notifications.js
 ```
 
 ### Notifications - Example
 ```javascript
 // ==UserScript==
 // @name         Mini Notifications Example
-// @require      https://raw.githubusercontent.com/maherm/sgapi/v0.1.5/sgapi.js
-// @require      https://raw.githubusercontent.com/maherm/sgapi/v0.1.5/sgapi_notifications.js
+// @require      https://raw.githubusercontent.com/maherm/sgapi/v0.1.6/sgapi.js
+// @require      https://raw.githubusercontent.com/maherm/sgapi/v0.1.6/sgapi_notifications.js
 // @match        https://www.steamgifts.com/giveaway/*
 // ==/UserScript==
 

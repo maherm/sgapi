@@ -1,12 +1,12 @@
 // ==UserScript==
 // @name         SgApi Notifications Example
 // @namespace    https://github.com/maherm/sgapi/
-// @version      0.4
+// @version      0.5
 // @author       mahermen
 // @downloadURL  https://raw.githubusercontent.com/maherm/sgapi/master/examples/notifications.user.js
-// @require      https://raw.githubusercontent.com/maherm/sgapi/v0.1.5/sgapi.js
-// @require      https://raw.githubusercontent.com/maherm/sgapi/v0.1.5/sgapi_notifications.js
-// @require      https://raw.githubusercontent.com/maherm/sgapi/v0.1.5/sgapi_gatools.js
+// @require      https://raw.githubusercontent.com/maherm/sgapi/v0.1.6/sgapi.js
+// @require      https://raw.githubusercontent.com/maherm/sgapi/v0.1.6/sgapi_notifications.js
+// @require      https://raw.githubusercontent.com/maherm/sgapi/v0.1.6/sgapi_gatools.js
 // @match        https://www.steamgifts.com/giveaway/*
 // ==/UserScript==
 
