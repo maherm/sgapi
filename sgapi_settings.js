@@ -393,6 +393,10 @@ SgApi.Plugins.register("Settings", "0.1.3", function(){
 				var $chkDiv = '<div data-checkbox-value="'+i+'" class="sgapi__enum '+isSelected+'"><i class="form__checkbox__default fa fa-circle-o"></i><i class="form__checkbox__hover fa fa-circle"></i><i class="form__checkbox__selected fa fa-check-circle"></i>'+optionName+'</div>';
 				$div.append($chkDiv);
 			}
+			if(setting.description){
+				var $descripton = $('<div class="form__input-description">'+setting.description+"</div>");
+				$div.append($descripton);
+			}
 			initEnum($div,setting, transform);
 			return $div;
 		}
@@ -419,6 +423,10 @@ SgApi.Plugins.register("Settings", "0.1.3", function(){
 				if(globalOptions.instantSubmit)
 					save();
 			});
+			if(setting.description){
+				var $descripton = $('<div class="form__input-description">'+setting.description+"</div>");
+				$div.append($descripton);
+			}
 			return $div;
 		}
 		
