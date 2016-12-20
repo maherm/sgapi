@@ -5,7 +5,8 @@
 * 	
 */
 
-SgApi.Plugins.register("Settings", "0.1.2", function(){
+SgApi.Plugins.register("Settings", "0.1.3", function(){
+
 	/**
 	 * 
 	 * @class Settings
@@ -47,6 +48,48 @@ SgApi.Plugins.register("Settings", "0.1.2", function(){
 		Setting.ENUM 	= "enum";
 		Setting.FUNC	= "func";
 		Setting.CUSTOM  = "custom";
+		
+		
+		/**
+		 * Class that can hold an array of values as well as named sub-stores that model a namespace.
+		 * Usage Example: ns.get("events").get("click").get("customNamespace").list();
+		 *
+		*  @class NamespaceStore
+		*  @private
+		 * @memberof SgApi
+		 * @declared in sgapi_settings.js
+		 */
+		var NamespaceStore = function(){
+			var subNamespaces = {};
+			var elements = [];
+			this.get = function(name){
+				var result = subNamespaces[name];
+				if(!result){
+					result = new NamespaceStore();
+					subNamespaces[name] = result;
+				}
+				return result;
+			};
+			
+			this.push = function(element){
+				elements.push(element);
+			}
+			
+			this.clear = function(){
+				elements = [];
+			}
+			
+			this.list = function(includeSubs){
+				var result = Array.from(elements);
+				if(includeSubs){
+					for(var ns in subNamespaces){
+						result = result.concat(subNamespaces[ns].list(true));
+					}
+				}
+				return result;
+			}
+		}
+	
 
 		//==================== Constants =================================
 		const uiElementFactory = {};
@@ -70,7 +113,9 @@ SgApi.Plugins.register("Settings", "0.1.2", function(){
 			useGmStorage: false,
 			infoBox: true,
 			section: "Userscripts"
-		}
+		};
+		
+		var eventCallbacks = new NamespaceStore();
 		
 		var settings;
 		var self=this;
@@ -114,10 +159,47 @@ SgApi.Plugins.register("Settings", "0.1.2", function(){
 			storage.deleteAll();
 		};
 		
+		this.on = function(event, callback){
+			var parts = event.split(".");
+			event = parts.splice(0,1);
+			var namespace = parts.join(".");
+			
+			eventCallbacks.get(event).get(namespace).push(callback);
+		};
 		
+		this.off = function(event, callback){
+			var parts = event.split(".");
+			event = parts.splice(0,1);
+			var namespace = parts.join(".");
+			
+			eventCallbacks.get(event).get(namespace).clear();
+		};
+		
+		this.options = function(name, value){
+			var setting;
+			if(name === value === undefined)
+				return $.extend(true, {}, globalOptions);
+			if(!value && typeof name === "string")
+				return $.extend(true, {}, settings[name]);
+			
+			if(!value)
+				$.extend(globalOptions, name);
+			else
+				$.extend(settings[name],value);
+			
+			this.reload();
+		};
+		
+		this.reload = function(){
+			switchToSettings();
+		}
 
 		
 		// ================================= Functions ========================
+		
+		function trigger(event, args){
+			eventCallbacks.get(event).list(true).forEach(function(c){c.apply(self, args);});
+		}
 		
 		function toCamelCase(str){
 			return str.replace(/\s+(\w)/gi, function(v){return v.replace(/\s+/gi,'').toUpperCase()}).replace(/\s/g,'');
@@ -207,13 +289,19 @@ SgApi.Plugins.register("Settings", "0.1.2", function(){
 			renderSettings();
 		}
 		
+		function evaluate(property, thisVal, args){
+			if(typeof property === "function")
+				return property.apply(thisVal, args);
+			return property;
+		}
+		
 		function renderSettings(){
 			//Build sections
 			settingsCounter = 1;
 			var $formRows = $("<div>").addClass("form__rows");
 			for(var name in settings){
 				var s = settings[name];
-				if(s.visible)
+				if(evaluate(s.visible, self, s))
 					$formRows.append(createFormRow(s.title,uiElementFactory[s.type](s)));
 			}
 			
@@ -402,6 +490,7 @@ SgApi.Plugins.register("Settings", "0.1.2", function(){
 		
 		function save(){
 			storage.save();
+			trigger("save");
 		}
 		
 		
