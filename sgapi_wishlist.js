@@ -5,7 +5,7 @@
 *			
 */
 
-SgApi.Plugins.register("Wishlist Tools", "0.1.0", function(){
+SgApi.Plugins.register("Wishlist Tools", "0.1.1", function(){
 	/**
 	 * 
 	 *  Namespace for the Wishlist Tools.
@@ -128,7 +128,7 @@ SgApi.Plugins.register("Wishlist Tools", "0.1.0", function(){
 					localStorage["sgapi__wishlist"] = JSON.stringify(wishlist);
 					localStorage["sgapi__wishlist_lastSynced"] = getLastSyncedValue();
 					console.log("Wishlist synced successfully. Found "+Object.keys(wishlist).length+" games");
-					promise.resolve(new Wishlist(wishlist));
+					promise.resolve(new WishlistContainer(wishlist));
 				});
 			}).fail(promise.reject);
 			return promise;
