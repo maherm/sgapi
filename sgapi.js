@@ -701,6 +701,20 @@ if(typeof $ === "undefined"){
 			}
 			
 			/**
+			 *  Takes a property that may be a function or anything else. If it is a funciton, the function is evaluated and it's result returned;
+			 *  
+			 *  @param {function|any} property the variable to evaluate
+			 *  @param {object} [thisArg=this] an object that may be passed to the function as value for "this"
+			 *  @param {object[]} [args] an array with arguments that are passed to the function
+			 */
+			this.evaluate = function(property, thisVal, args){
+				thisVal = thisVal || this;
+				if(typeof property === "function")
+					return property.apply(thisVal, args);
+				return property;
+			}
+			
+			/**
 			* 
 			* Gets or creates a datastore. Datastores can be used to store data in the scope of a page request, spanning all Userscripts. Meaning, you can share data between UserScripts bypassing the Script Managers sandbox.
 			*

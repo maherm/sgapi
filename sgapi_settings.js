@@ -289,11 +289,7 @@ SgApi.Plugins.register("Settings", "0.1.3", function(){
 			renderSettings();
 		}
 		
-		function evaluate(property, thisVal, args){
-			if(typeof property === "function")
-				return property.apply(thisVal, args);
-			return property;
-		}
+		var evaluate = SgApi.Util.evaluate;
 		
 		function renderSettings(){
 			//Build sections
@@ -302,7 +298,7 @@ SgApi.Plugins.register("Settings", "0.1.3", function(){
 			for(var name in settings){
 				var s = settings[name];
 				if(evaluate(s.visible, self, s))
-					$formRows.append(createFormRow(s.title,uiElementFactory[s.type](s)));
+					$formRows.append(createFormRow(s.title,uiElementFactory[s.type](s),evaluate(s.editable, self, s)));
 			}
 			
 			if(!globalOptions.instantSubmit)
@@ -315,12 +311,14 @@ SgApi.Plugins.register("Settings", "0.1.3", function(){
 		}
 
 		var settingsCounter = 1;
-		function createFormRow(title, $content){
+		function createFormRow(title, $content, enabled){
 			var $formHeadingNumber = $("<div>").addClass("form__heading__number").text(settingsCounter++);
 			var $formHeadingText = $("<div>").addClass("form__heading__text").text(title);
 			var $formHeading = $("<div>").addClass("form__heading").append($formHeadingNumber).append($formHeadingText);
 			var $formRowIndent = $("<div>").addClass("form__row__indent").append($content);
 			var $formRow = $("<div>").addClass("form__row").append($formHeading).append($formRowIndent);
+			if(!enabled)
+				$formRow.addClass("disabled");
 			return $formRow.addClass("sgapi__setting_row");
 		}
 			
@@ -334,6 +332,14 @@ SgApi.Plugins.register("Settings", "0.1.3", function(){
 			$btn.on("click.sgapi", save);
 		}
 		
+		function addDescription($resultDiv, setting){
+			var desc = evaluate(setting.description, self, setting);
+			if(desc){
+				var $descripton = $('<div class="form__input-description">'+desc+"</div>");
+				$resultDiv.append($descripton);
+			}
+		}
+		
 		function createButton(setting, $container){
 			var title = setting.label || setting.name;
 			var name = encodeCodeName(setting.name);
@@ -345,39 +351,38 @@ SgApi.Plugins.register("Settings", "0.1.3", function(){
 				var $icon = $("<i>").addClass("sgapi__icon_"+name).addClass("fa "+fa_icon);
 				$buttonDiv.prepend($icon);
 			}
-			$buttonDiv.click(function(){setting.func.call($buttonDiv, self);});
+			if(evaluate(setting.editable, self, setting))
+				$buttonDiv.click(function(){setting.func.call($buttonDiv, self);});
 			$resultDiv.append($buttonDiv);
-			if(setting.description){
-				var $descripton = $('<div class="form__input-description">'+setting.description+"</div>");
-				$resultDiv.append($descripton);
-			}
+			addDescription($resultDiv, setting);
+			
 			return $resultDiv;
 		}
 		
 		function createIntInput(setting){
 			var validator = function(intStr){
-				return isInteger(intStr) && intStr >= setting.minValue && intStr <= setting.maxValue;
+				return isInteger(intStr) && intStr >= evaluate(setting.minValue, self, setting) && intStr <= evaluate(setting.maxValue, self, setting);
 			}
 			return createTextBoxSetting(setting, validator);
 		}
 		
 		function createFloatInput(setting){
 			var validator = function(str){
-				return isNumeric(str) && str >= setting.minValue && str <= setting.maxValue;
+				return isNumeric(str) && str >= evaluate(setting.minValue, self, setting) && str <= evaluate(setting.maxValue, self, setting);
 			}
 			return createTextBoxSetting(setting, validator);
 		}
 		
 		function createStringInput(setting){
 			var validator = function(str){
-				return str.length>= setting.minLength && str.length <= setting.maxLength;
+				return str.length>= evaluate(setting.minLength, self, setting) && str.length <= evaluate(setting.maxLength, self, setting);
 			}
 			return createTextBoxSetting(setting, validator);
 		}
 		
 		function createTextBoxSetting(setting, validator){
 			$input = createTextInput(setting)
-			if(setting.editable)
+			if(evaluate(setting.editable, self, setting))
 				initInput($input, setting, validator);
 			else 
 				$input.attr("disabled", "true");
@@ -393,10 +398,7 @@ SgApi.Plugins.register("Settings", "0.1.3", function(){
 				var $chkDiv = '<div data-checkbox-value="'+i+'" class="sgapi__enum '+isSelected+'"><i class="form__checkbox__default fa fa-circle-o"></i><i class="form__checkbox__hover fa fa-circle"></i><i class="form__checkbox__selected fa fa-check-circle"></i>'+optionName+'</div>';
 				$div.append($chkDiv);
 			}
-			if(setting.description){
-				var $descripton = $('<div class="form__input-description">'+setting.description+"</div>");
-				$div.append($descripton);
-			}
+			addDescription($div, setting);
 			initEnum($div,setting, transform);
 			return $div;
 		}
@@ -413,31 +415,31 @@ SgApi.Plugins.register("Settings", "0.1.3", function(){
 				var $chkDiv = '<div data-checkbox-value="'+i+'" class="form__checkbox '+isSelected+'"><i class="form__checkbox__default fa fa-circle-o"></i><i class="form__checkbox__hover fa fa-circle"></i><i class="form__checkbox__selected fa fa-check-circle"></i>'+optionName+'</div>';
 				$div.append($chkDiv);
 			}
-			$div.on("click.sgapi", "div.form__checkbox", function(e){
-				var $div = $(this);
-				var val = +$div.attr("data-checkbox-value");
-				$div.siblings("div.form__checkbox").removeClass("is-selected");
-				setting.value=toBool(val);
-				$div.addClass("is-selected");
-				
-				if(globalOptions.instantSubmit)
-					save();
-			});
-			if(setting.description){
-				var $descripton = $('<div class="form__input-description">'+setting.description+"</div>");
-				$div.append($descripton);
+			if(evaluate(setting.editable, self, setting)){
+				$div.on("click.sgapi", "div.form__checkbox", function(e){
+					var $div = $(this);
+					var val = +$div.attr("data-checkbox-value");
+					$div.siblings("div.form__checkbox").removeClass("is-selected");
+					setting.value=toBool(val);
+					$div.addClass("is-selected");
+					
+					if(globalOptions.instantSubmit)
+						save();
+				});
 			}
+			addDescription($div, setting);
 			return $div;
 		}
 		
 		function initEnum($div, setting){
-			if(!setting.editable)
+			if(!evaluate(setting.editable, self, setting))
 				return;
 			$div.on("click.sgapi", "div.sgapi__enum", function(e){
 				
 				var $div = $(this);
 				var val = +$div.attr("data-checkbox-value");
-				if(setting.maxSelected == 1){
+				var maxSelected = evaluate(setting.maxSelected, self, setting);
+				if(maxSelected == 1){
 					$div.siblings("div.sgapi__enum").removeClass("is-selected");
 					setting.value=[val];
 					$div.addClass("is-selected");
@@ -449,7 +451,7 @@ SgApi.Plugins.register("Settings", "0.1.3", function(){
 						$div.removeClass("is-selected");
 					}
 					else{
-						if(setting.value.length < setting.maxSelected){
+						if(setting.value.length < maxSelected){
 							setting.value.push(val);
 							$div.addClass("is-selected");
 						}
@@ -469,10 +471,8 @@ SgApi.Plugins.register("Settings", "0.1.3", function(){
 			var $label = $("<label>").attr("for", id).text(setting.name);
 			$input.val(setting.value);
 			$div.append($input).append($label);
-			if(setting.description){
-				var $descripton = $('<div class="form__input-description">'+setting.description+"</div>");
-				$div.append($descripton);
-			}
+			addDescription($div, setting);
+
 			return $input;
 		}
 		
@@ -532,16 +532,6 @@ SgApi.Plugins.register("Settings", "0.1.3", function(){
 		
 			$div.addClass("sgapi__info_box");
 			return $div;
-		}
-
-		
-		var injectCss = function(styles){
-			var cssId = "sgapi_settings_style";  // you could encode the css path itself to generate id..
-			if (!document.getElementById(cssId))
-			{
-				var head  = document.getElementsByTagName('head')[0];
-				$('head').append('<style id="'+cssId+'" type="text/css">'+styles+'</style>');
-			}
 		}
 
 		function reloadSettings(){
@@ -657,6 +647,23 @@ SgApi.Plugins.register("Settings", "0.1.3", function(){
 	}\
 	.sgapi__setting_row label {\
 		display: none;\
+	}\
+	.sgapi__setting_row.disabled *{\
+		color:#9e9e9e;\
+	}\
+	.sgapi__setting_row.disabled .form__checkbox.is-selected .fa-circle-o, .sgapi__setting_row.disabled .form__checkbox:not(.is-selected) .fa-check-circle, .sgapi__setting_row.disabled .form__checkbox__hover {\
+		display: none;\
+	}\
+	.sgapi__setting_row.disabled .form__checkbox.is-selected .fa-check-circle, .sgapi__setting_row.disabled .form__checkbox:not(.is-selected) .fa-circle-o{\
+		display: initial;\
+	}\
+	.sgapi__setting_row.disabled .form__submit-button{ \
+	    border-color: lightgray; \
+		text-shadow: 1px 1px 1px rgba(224,246,198,0.5); \
+		background-image: linear-gradient(#c8d0c1 0%, #c4cabe 50%, #bdc1b9 100%); \
+		background-image: -webkit-linear-gradient(#c8d0c1 0%, #c4cabe 50%, #bdc1b9 100%); \
+		background-image: -moz-linear-gradient(#c8d0c1 0%, #c4cabe 50%, #bdc1b9 100%); \
+		color:gray; \
 	}\
 	";
 		
@@ -879,7 +886,7 @@ SgApi.Plugins.register("Settings", "0.1.3", function(){
 				$.extend(globalOptions, options);
 				initSettings();
 				if(isAccountPage()){
-					injectCss(styles);
+					SgApi.Util.injectCss(styles);
 					addSettingsSectionLink();
 					if(isSettingsPage()){
 						switchToSettings();

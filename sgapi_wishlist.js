@@ -1,7 +1,6 @@
 /*
 *	SteamGifts Userscript API
 *	Wishlist Tools
-*	v 1.0
 *			
 */
 
