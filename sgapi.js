@@ -13,7 +13,7 @@ if(typeof $ === "undefined"){
 }
 
 (function(root){
-	var version = "0.1.6";
+	var version = "0.1.7";
 	
 	/**
 	 *  @param {Container} dataContainer the container in which the Registry's data is stored.
