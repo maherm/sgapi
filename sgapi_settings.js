@@ -159,6 +159,18 @@ SgApi.Plugins.register("Settings", "0.1.3", function(){
 			storage.deleteAll();
 		};
 		
+		/**
+		 *  Register an event callback.
+		 *  Like jQuery callbacks, SgApi Events be registered to a namespace by appending ".{namespace}" to the event, e.g. 
+		 *  <code>"save.myCustomNameSpace"</code>.<br>
+		 * To unregister all callbacks for an event, use <code>off({string})</code>. To unregister a specific callback, use a namespace.
+		 * <br>Available events:<br>
+		 * <ul>
+		 * <li><b>save</b> - triggered every time the sttings are saved. If the <code>instantSubmit</code> option is set, that means on every user input</li>
+		 * </ul>
+		 *  @param {string} [event] the event to hook to.
+		 *  @param {function} [callback] the callback to be called. The settings object will be passed as the <code>this</code> context to the callback function.
+		 */
 		this.on = function(event, callback){
 			var parts = event.split(".");
 			event = parts.splice(0,1);
@@ -167,7 +179,14 @@ SgApi.Plugins.register("Settings", "0.1.3", function(){
 			eventCallbacks.get(event).get(namespace).push(callback);
 		};
 		
-		this.off = function(event, callback){
+		/**
+		 *  Unregister an event callback.
+		 *  To unregister all callbacks for an event, use <code>off({string})</code>. 
+		 *  To unregister a specific callback, use a namespace.
+		 *  
+		 *  @see on(string, function)
+		 */
+		this.off = function(event){
 			var parts = event.split(".");
 			event = parts.splice(0,1);
 			var namespace = parts.join(".");

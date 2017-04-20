@@ -5,6 +5,14 @@
 <dd></dd>
 </dl>
 
+## Functions
+
+<dl>
+<dt><a href="#evaluate">evaluate(property, [thisArg], [args])</a></dt>
+<dd><p>Takes a property that may be a function or anything else. If it is a funciton, the function is evaluated and it&#39;s result returned;</p>
+</dd>
+</dl>
+
 <a name="SgApi"></a>
 
 ## SgApi : <code>object</code>
@@ -1065,7 +1073,7 @@ Includes a CSS file that was declared as a resource in the script header. WARNI
 
 **Example**  
 ```js
-// @resource     css https://manuelhermenau.de/scripts/test.css	// @grant        GM_getResourceText	// ==/UserScript==	use(SgApi.Util);	requireResourceCss("css");
+// @resource     css https://raw.githubusercontent.com/maherm/sgapi/311cb9/examples/example.css	// @grant        GM_getResourceText	// ==/UserScript==	use(SgApi.Util);	requireResourceCss("css");
 ```
 <a name="SgApi.Util.this.requireDeclaredStyles"></a>
 
@@ -1450,6 +1458,19 @@ Creates and shows a new notification. If there is already a notificaiton display
 ```js
 //This Notification will be displayed everytime until the user disposes it by clicking the "x"Notifications.notify("info", "New Version: 2.3 - New Features include nicer header and world domination", {key:"Version23"});//This notification will auto-close after 10 secondsNotifications.notify("warning", "This notification will close in 10 seconds", {duration: 10000, closable:false});
 ```
+<a name="evaluate"></a>
+
+## evaluate(property, [thisArg], [args])
+Takes a property that may be a function or anything else. If it is a funciton, the function is evaluated and it's result returned;
+
+**Kind**: global function  
+
+| Param | Type | Default | Description |
+| --- | --- | --- | --- |
+| property | <code>function</code> &#124; <code>any</code> |  | the variable to evaluate |
+| [thisArg] | <code>object</code> | <code>this</code> | an object that may be passed to the function as value for "this" |
+| [args] | <code>Array.&lt;object&gt;</code> |  | an array with arguments that are passed to the function |
+
 <a name="SgApi"></a>
 
 ## .SgApi : <code>object</code>
@@ -2511,7 +2532,7 @@ Includes a CSS file that was declared as a resource in the script header. WARNI
 
 **Example**  
 ```js
-// @resource     css https://manuelhermenau.de/scripts/test.css	// @grant        GM_getResourceText	// ==/UserScript==	use(SgApi.Util);	requireResourceCss("css");
+// @resource     css https://raw.githubusercontent.com/maherm/sgapi/311cb9/examples/example.css	// @grant        GM_getResourceText	// ==/UserScript==	use(SgApi.Util);	requireResourceCss("css");
 ```
 <a name="SgApi.Util.this.requireDeclaredStyles"></a>
 
